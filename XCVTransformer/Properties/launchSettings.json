@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "XCVTransformer (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "XCVTransformer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
