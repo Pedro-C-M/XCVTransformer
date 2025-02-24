@@ -13,14 +13,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<!--Es el patrón inclusión recursivo que mete todo ico y png en assets-->
   <ItemGroup>
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\**\*.png" />
+	<Content Include="Assets\**\*.ico" />
   </ItemGroup>
 
   <ItemGroup>
