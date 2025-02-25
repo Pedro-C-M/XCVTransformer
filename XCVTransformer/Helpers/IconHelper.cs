@@ -6,9 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using WinRT.Interop;
 
-namespace XCVTransformer.PInvokeAPIs
+namespace XCVTransformer.Helpers
 {
-    static class IconAPI
+    /*
+     * Permite cambiar el icono de una ventana.
+     * 
+     * Hace uso de la API de Windows user32.dll de la cual utiliza los métodos:
+     * 
+     *  - LoadImage: Carga una imagen desde un archivo
+     *  
+     *  - SendMessage: Envía un mensaje a una ventana para modificar su apariencia
+     */
+    static class IconHelper
     {
         [DllImport("user32.dll", SetLastError = true)]
         private static extern IntPtr LoadImage(IntPtr hinst, string lpszName, uint uType, int cx, int cy, uint fuLoad);
@@ -21,11 +30,12 @@ namespace XCVTransformer.PInvokeAPIs
         private const uint IMAGE_ICON = 1;
         private const uint LR_LOADFROMFILE = 0x0010;
 
-        private static void SetWindowIcon(string iconPath, IntPtr currentHWND)
+        /**
+         * iconPath: Dirección de la imagen a cargar
+         * hwmd: Handler de la ventana donde queremos el icono
+         */
+        public static void SetWindowIcon(string iconPath, IntPtr hwnd)
         {
-            // Obtener el handle de la ventana (HWND)
-            IntPtr hwnd = WindowNative.GetWindowHandle(currentHWND);
-
             // Cargar el icono desde el archivo
             IntPtr hIcon = LoadImage(IntPtr.Zero, iconPath, IMAGE_ICON, 32, 32, LR_LOADFROMFILE);
 
