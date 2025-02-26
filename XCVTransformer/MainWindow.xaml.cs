@@ -21,7 +21,8 @@ namespace XCVTransformer
         public MainWindow()
         {
             this.InitializeComponent();
-            Helpers.IconHelper.SetWindowIcon("Assets/AppLogo/Developing-logo.ico", WindowNative.GetWindowHandle(this));
+            Helpers.IconHelper.SetWindowIcon("Assets/AppLogo/App-logo.ico", WindowNative.GetWindowHandle(this));
+            Helpers.TrayHelper.ShowTrayIcon(this, "Estoy vivo", "Assets/AppLogo/App-logo.ico");
         }
 
         private void myButton_Click(object sender, RoutedEventArgs e)

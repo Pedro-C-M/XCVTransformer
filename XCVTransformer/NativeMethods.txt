@@ -1,0 +1,5 @@
+Shell_NotifyIcon
+LoadIcon
+RegisterWindowMessage
+CreatePopupMenu
+TrackPopupMenu
