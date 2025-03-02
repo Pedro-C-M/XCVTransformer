@@ -31,6 +31,7 @@ namespace XCVTransformer
             
             Helpers.TrayHelper.ShowTrayIcon(hWnd, "Estoy vivo", "Assets/AppLogo/App-logo.ico");
 
+
             WinSubclasses.TrayWindowSubclass.RegisterSubclass(hWnd);
             WinSubclasses.TrayWindowSubclass.WindowMessageReceived += OnWindowMessageReceived;
 
@@ -43,7 +44,7 @@ namespace XCVTransformer
         {
             if (e.WParam.ToInt32() == 1) // 1 es el uID del NOTIFYICONDATA del tray
             {
-                TrayHelper.HandleTrayMessage(hWnd, (uint)e.LParam);
+                TrayHelper.HandleTrayMessage(hWnd, (uint)e.LParam, this);
             }
         }
         /***

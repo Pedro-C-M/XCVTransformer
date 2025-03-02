@@ -94,19 +94,19 @@ namespace XCVTransformer.Helpers
             Shell_NotifyIcon(0x00000000, ref nid); // Añadir el ícono a la bandeja
         }
 
-        public static void HandleTrayMessage(IntPtr hwnd, uint msg)
+        public static void HandleTrayMessage(IntPtr hwnd, uint msg, MainWindow mainWin)
         {
             if (msg == WM_RBUTTONUP) // Clic derecho menu contextual
             {
-                ShowContextMenu(hwnd);
+                ShowContextMenu(hwnd, mainWin);
             }
             if (msg == WM_LBUTTONUP) // Clic izdo minimizo/abro ventana
             {
-                ShowContextMenu(hwnd);
+                OpenOrCloseMainWindow(mainWin);
             }
         }
 
-        private static void ShowContextMenu(IntPtr hwnd)
+        private static void ShowContextMenu(IntPtr hwnd, MainWindow mainWin)
         {
             // Obtener la posición actual del cursor
             if (!GetCursorPos(out POINT cursorPos))
@@ -130,7 +130,13 @@ namespace XCVTransformer.Helpers
             switch (clicked)
             {
                 case 1:
+                    if(mainWin == null)//Por seguridad
+                    {
+                        Debug.WriteLine("Abrir la aplicacion del menu da error de mainWin nula");
+                        break;
+                    }
                     Debug.WriteLine("Abrir aplicación seleccionado");
+                    OpenOrCloseMainWindow(mainWin);
                     break;
                 case 2:
                     Debug.WriteLine("Salir seleccionado en el menu contextual");
@@ -138,11 +144,20 @@ namespace XCVTransformer.Helpers
                     app.ExitApplication();
                     break;
             }
-
-            // Liberar el menú
             DestroyMenu(hMenu);
         }
 
+        private static void OpenOrCloseMainWindow(MainWindow mainWin)
+        {
+            if(mainWin.Visible)
+            {
+                mainWin.AppWindow.Hide();
+            }
+            else
+            {
+                mainWin.AppWindow.Show();
+            }
+        }
 
         public static void RemoveTrayIcon(Window window)
         {
