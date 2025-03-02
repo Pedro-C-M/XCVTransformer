@@ -29,7 +29,7 @@ namespace XCVTransformer.Helpers
         private const uint NIF_TIP = 0x00000004;
         private const uint NIF_SHOWTIP = 0x00000080;
 
-        private const uint WM_MOUSEMOVE = 0x2000;
+        public const uint WM_MOUSEMOVE = 0x2000;
         private const uint WM_LBUTTONUP = 0x0202;
         private const uint WM_RBUTTONUP = 0x0205; // Clic derecho
 

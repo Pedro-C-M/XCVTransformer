@@ -31,6 +31,8 @@ namespace XCVTransformer.Helpers
         private const uint LR_LOADFROMFILE = 0x0010;
 
         /**
+         * Cambia el icono de la ventana al deseado
+         * 
          * iconPath: Dirección de la imagen a cargar
          * hwmd: Handler de la ventana donde queremos el icono
          */
