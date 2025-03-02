@@ -29,9 +29,9 @@ namespace XCVTransformer.Helpers
         private const uint NIF_TIP = 0x00000004;
         private const uint NIF_SHOWTIP = 0x00000080;
 
-        public const uint WM_MOUSEMOVE = 0x2000;
-        private const uint WM_LBUTTONUP = 0x0202;
-        private const uint WM_RBUTTONUP = 0x0205; // Clic derecho
+        public const uint WM_MOUSEMOVE = 0x2000; // Mover
+        public const uint WM_LBUTTONUP = 0x0202; // Clic izd
+        public const uint WM_RBUTTONUP = 0x0205; // Clic derecho
 
 
         private const uint IMAGE_ICON = 1;
@@ -95,7 +95,11 @@ namespace XCVTransformer.Helpers
 
         public static void HandleTrayMessage(IntPtr hwnd, uint msg)
         {
-            if (msg == WM_RBUTTONUP) // Clic derecho
+            if (msg == WM_RBUTTONUP) // Clic derecho menu contextual
+            {
+                ShowContextMenu(hwnd);
+            }
+            if (msg == WM_LBUTTONUP) // Clic izdo minimizo/abro ventana
             {
                 ShowContextMenu(hwnd);
             }
@@ -110,7 +114,7 @@ namespace XCVTransformer.Helpers
             IntPtr hMenu = CreatePopupMenu();
 
             // Agregar opciones al menú
-            AppendMenu(hMenu, 0, 1, "Abrir aplicación");
+            AppendMenu(hMenu, 0, 1, "Abrir owowowo");
             AppendMenu(hMenu, 0, 2, "Salir");
 
             // Hacer que el menú aparezca en primer plano

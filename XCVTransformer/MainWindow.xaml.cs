@@ -36,17 +36,17 @@ namespace XCVTransformer
 
             this.Closed += MainWindow_Closed;
         }
-
+        /***
+         * Si el mensaje recibido es del tray icon ir a su handler, aqui se llega desde la subclass cuando le llega WindowMessageReceived manda a aqui
+         */
         private void OnWindowMessageReceived(object sender, WindowMessageEventArgs e)
         {
-            // Si el mensaje es para nuestro icono de la bandeja (comprobamos el ID)
-            if (e.WParam.ToInt32() == 1) // 1 es el uID que usaste en NOTIFYICONDATA
+            if (e.WParam.ToInt32() == 1) // 1 es el uID del NOTIFYICONDATA del tray
             {
-                // Manejar el mensaje de la bandeja del sistema
                 TrayHelper.HandleTrayMessage(hWnd, (uint)e.LParam);
             }
         }
-        /**
+        /***
          * Importante limpiar recursos de tray para que no se quede el icono en el area de tray después de cerrado el programa
          */
         private void MainWindow_Closed(object sender, WindowEventArgs args)
@@ -56,6 +56,9 @@ namespace XCVTransformer
             TrayHelper.RemoveTrayIcon(this);
         }
 
+        /***
+         * Click sin mas jej
+         */
         private void myButton_Click(object sender, RoutedEventArgs e)
         {
             myButton.Content += "Clicked";
