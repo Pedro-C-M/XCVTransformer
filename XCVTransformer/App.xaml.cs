@@ -44,6 +44,10 @@ namespace XCVTransformer
             m_window = new MainWindow();
             m_window.Activate();
         }
+        internal void ExitApplication()
+        {
+            this.Exit(); 
+        }
 
         private Window? m_window;
     }

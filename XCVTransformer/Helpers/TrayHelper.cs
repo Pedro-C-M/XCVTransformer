@@ -37,7 +37,8 @@ namespace XCVTransformer.Helpers
         private const uint IMAGE_ICON = 1;
         private const uint LR_LOADFROMFILE = 0x0010;
         private const uint TPM_LEFTALIGN = 0x0000;
-        private const uint TPM_RIGHTBUTTON = 0x0002;
+        private const uint TPM_LEFTBUTTON = 0x0000;
+        private const uint TPM_RETURNCMD = 0x0100;
 
 
 
@@ -114,14 +115,16 @@ namespace XCVTransformer.Helpers
             IntPtr hMenu = CreatePopupMenu();
 
             // Agregar opciones al menú
-            AppendMenu(hMenu, 0, 1, "Abrir owowowo");
+            AppendMenu(hMenu, 0, 1, "Abrir XCVTransformer");
             AppendMenu(hMenu, 0, 2, "Salir");
 
             // Hacer que el menú aparezca en primer plano
             SetForegroundWindow(hwnd);
 
             // Mostrar el menú en la posición del cursor
-            uint clicked = (uint)TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_RIGHTBUTTON, cursorPos.X, cursorPos.Y, 0, hwnd, IntPtr.Zero);
+            uint clicked = (uint)TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RETURNCMD, cursorPos.X, cursorPos.Y, 0, hwnd, IntPtr.Zero);
+
+            Debug.WriteLine($"Opción seleccionada: {clicked}");
 
             // Procesar selección del menú
             switch (clicked)
@@ -130,8 +133,9 @@ namespace XCVTransformer.Helpers
                     Debug.WriteLine("Abrir aplicación seleccionado");
                     break;
                 case 2:
-                    Debug.WriteLine("Salir seleccionado");
-                    //Environment.Exit(0);
+                    Debug.WriteLine("Salir seleccionado en el menu contextual");
+                    var app = (App)Application.Current;
+                    app.ExitApplication();
                     break;
             }
 
