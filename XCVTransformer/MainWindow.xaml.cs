@@ -21,6 +21,8 @@ namespace XCVTransformer
             Helpers.IconHelper.SetWindowIcon("Assets/AppLogo/App-logo.ico", hWnd);
             Helpers.TaskBarHelper.HideFromTaskbar(hWnd);
             trayManager = new TrayManager(this, hWnd);
+
+            Helpers.SystemTrayPositionHelper.PositionNearSystemTrayIcon(hWnd, 300, 500);
             
         }
         /***
