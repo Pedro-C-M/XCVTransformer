@@ -132,14 +132,14 @@ namespace XCVTransformer.Helpers
                 case 1:
                     if(mainWin == null)//Por seguridad
                     {
-                        Debug.WriteLine("Abrir la aplicacion del menu da error de mainWin nula");
+                        //Debug.WriteLine("Abrir la aplicacion del menu da error de mainWin nula");
                         break;
                     }
-                    Debug.WriteLine("Abrir aplicación seleccionado");
+                    //Debug.WriteLine("Abrir aplicación seleccionado");
                     OpenOrCloseMainWindow(mainWin);
                     break;
                 case 2:
-                    Debug.WriteLine("Salir seleccionado en el menu contextual");
+                    //Debug.WriteLine("Salir seleccionado en el menu contextual");
                     var app = (App)Application.Current;
                     app.ExitApplication();
                     break;

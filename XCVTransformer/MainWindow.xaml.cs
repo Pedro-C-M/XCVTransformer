@@ -19,7 +19,9 @@ namespace XCVTransformer
             hWnd = WindowNative.GetWindowHandle(this);
            
             Helpers.IconHelper.SetWindowIcon("Assets/AppLogo/App-logo.ico", hWnd);
+            Helpers.TaskBarHelper.HideFromTaskbar(hWnd);
             trayManager = new TrayManager(this, hWnd);
+            
         }
         /***
          * Click sin mas jej
