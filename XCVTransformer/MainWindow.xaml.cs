@@ -22,7 +22,7 @@ namespace XCVTransformer
             Helpers.TaskBarHelper.HideFromTaskbar(hWnd);
             trayManager = new TrayManager(this, hWnd);
 
-            Helpers.SystemTrayPositionHelper.PositionNearSystemTrayIcon(hWnd, 300, 500);
+            Helpers.SystemTrayPositionHelper.PositionNearSystemTrayIcon(hWnd);
             
         }
         /***

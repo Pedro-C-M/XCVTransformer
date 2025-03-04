@@ -124,7 +124,7 @@ namespace XCVTransformer.Helpers
             // Mostrar el menú en la posición del cursor
             uint clicked = (uint)TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RETURNCMD, cursorPos.X, cursorPos.Y, 0, hwnd, IntPtr.Zero);
 
-            Debug.WriteLine($"Opción seleccionada: {clicked}");
+            //Debug.WriteLine($"Opción seleccionada: {clicked}");
 
             // Procesar selección del menú
             switch (clicked)
