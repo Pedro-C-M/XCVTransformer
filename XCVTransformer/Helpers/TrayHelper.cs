@@ -156,6 +156,9 @@ namespace XCVTransformer.Helpers
             else
             {
                 mainWin.AppWindow.Show();
+                // Quiero la ventana siempre al frente al abrirla
+                mainWin.Activate(); 
+                SetForegroundWindow(WindowNative.GetWindowHandle(mainWin)); 
             }
         }
 
