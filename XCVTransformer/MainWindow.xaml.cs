@@ -2,6 +2,7 @@ using System;
 using Microsoft.UI.Xaml;
 using WinRT.Interop;
 using XCVTransformer.AuxClasses;
+using XCVTransformer.Helpers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,7 +24,8 @@ namespace XCVTransformer
             trayManager = new TrayManager(this, hWnd);
 
             Helpers.SystemTrayPositionHelper.PositionNearSystemTrayIcon(hWnd);
-            
+            WindowLockHelper.LockWindowSize(hWnd);
+
         }
         /***
          * Click sin mas jej

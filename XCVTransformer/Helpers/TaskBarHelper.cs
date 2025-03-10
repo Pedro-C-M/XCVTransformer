@@ -5,7 +5,7 @@ namespace XCVTransformer.Helpers
 {
     /*
      * Permite convertir la ventana de AppWindow a ToolWindow para que asi no salga en la taskbar de Windows 
-     * y cumpla lo que busco con el tray.
+     * y cumpla lo que busco con el tray. 
      * 
      * Hace uso de la API de Windows user32.dll de la cual utiliza los métodos:
      * 
