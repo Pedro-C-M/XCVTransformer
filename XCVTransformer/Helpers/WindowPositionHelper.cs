@@ -13,11 +13,8 @@ namespace XCVTransformer.Helpers
      * la ventana con un ancho alto y offsets personalizables en las constantes.
      * 
      */
-    static class SystemTrayPositionHelper
+    static class WindowPositionHelper
     {
-        //Se puede configurar aqui el ancho y alto de la ventana
-        const int width = 300;
-        const int height = 500;
         //Se puede configurar aqui un ajuste de localizacion de la ventana
         const int hOffset = 150;///+ a la izquierda, - a la derecha
         const int vOffset = -10;///+ hacia arriba, - hacia abajo
@@ -71,7 +68,7 @@ namespace XCVTransformer.Helpers
         /**
         * Pone la ventana cerca del RECT del notify area
         */
-        public static void PositionNearSystemTrayIcon(IntPtr hWnd)
+        public static void PositionNearSystemTrayIcon(IntPtr hWnd, int width, int height)
         {
             try
             {

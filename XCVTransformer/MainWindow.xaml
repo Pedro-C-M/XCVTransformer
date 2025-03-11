@@ -9,7 +9,40 @@
     mc:Ignorable="d"
     Title="XCVTransformer">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
+
+    <NavigationView x:Name="navView"
+                PaneDisplayMode="Top"
+                IsBackButtonVisible="Collapsed"
+                IsSettingsVisible="False"
+        <!-- Personalización del contenido para centrar botones -->
+        <NavigationView.PaneCustomContent>
+            <Grid Width="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <NavigationViewItem 
+                    Content="Traducir" Tag="TranslatorPage" 
+                    Grid.Column="1" IsSelected="True" 
+                    Tapped="TraducirClicked"/>
+                
+                
+            </Grid>
+        </NavigationView.PaneCustomContent>
+
+        <Frame x:Name="contentFrame"/>
+    </NavigationView>
+
+    <!-- 
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <PasswordBox Name="passworBoxWithRevealmode" Width="200" Margin="0,0,8,0"
+            PasswordRevealMode="Visible" AutomationProperties.Name="Pasa al portapapeles"/>
+        <CheckBox Name="revealModeCheckBox" IsChecked="False"
+            Checked="RevealModeCheckbox_Changed" Unchecked="RevealModeCheckbox_Changed"/>
+
     </StackPanel>
+    -->
 </Window>
