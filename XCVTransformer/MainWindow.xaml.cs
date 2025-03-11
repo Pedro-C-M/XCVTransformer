@@ -53,15 +53,44 @@ namespace XCVTransformer
         /***
          * Handlers de eventos de la ventana
         */
+
+
         private void LoadNav()
         {
             contentFrame.Navigate(typeof(TranslatorPage));
         }
-        private void TraducirClicked(object sender, TappedRoutedEventArgs e)
-        {
-            contentFrame.Navigate(typeof(TranslatorPage));
-        }
 
+        private NavigationViewItem _lastSelectedItem = null; // Variable para almacenar el último item seleccionado
+        private void NavItemTapped(object sender, TappedRoutedEventArgs e)
+        {
+            var tappedItem = sender as NavigationViewItem;
+
+            if (tappedItem != null)
+            {
+                // Si hay un item previamente seleccionado, desmarcarlo
+                if (_lastSelectedItem != null)
+                {
+                    _lastSelectedItem.IsSelected = false;
+                }
+
+                // Marcar el nuevo item como seleccionado
+                tappedItem.IsSelected = true;
+
+                // Actualizar el último item seleccionado
+                _lastSelectedItem = tappedItem;
+
+                string tag = tappedItem.Tag.ToString();
+
+                if (tag == "TranslatorPage")
+                {
+                    contentFrame.Navigate(typeof(TranslatorPage));
+                }
+                else if (tag == "OptionsPage")
+                {
+                    contentFrame.Navigate(typeof(OptionsPage));
+                }
+            }
+        }
         /**
         private void RevealModeCheckbox_Changed(object sender, RoutedEventArgs e)
         {

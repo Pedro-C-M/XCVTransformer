@@ -13,22 +13,25 @@
     <NavigationView x:Name="navView"
                 PaneDisplayMode="Top"
                 IsBackButtonVisible="Collapsed"
-                IsSettingsVisible="False"
+                IsSettingsVisible="False">
         <!-- Personalización del contenido para centrar botones -->
         <NavigationView.PaneCustomContent>
             <Grid Width="Auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <NavigationViewItem 
                     Content="Traducir" Tag="TranslatorPage" 
-                    Grid.Column="1" IsSelected="True" 
-                    Tapped="TraducirClicked"/>
-                
-                
+                    Grid.Column="1"
+                    Tapped="NavItemTapped"/>
+                <NavigationViewItem 
+                    Content="Opciones" Tag="OptionsPage" 
+                    Grid.Column="2"  
+                    Tapped="NavItemTapped"/>
             </Grid>
         </NavigationView.PaneCustomContent>
 
