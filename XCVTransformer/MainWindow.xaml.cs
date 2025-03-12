@@ -1,8 +1,10 @@
 using System;
+using System.ComponentModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Animation;
+using Windows.ApplicationModel.DataTransfer;
 using WinRT.Interop;
 using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
@@ -23,11 +25,18 @@ namespace XCVTransformer
         private IntPtr hWnd;//Atr del handler de la ventana principal
         private TrayManager trayManager;
 
+        //Cosas de portapapeles
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         public MainWindow()
         {
             this.InitializeComponent();
             PrepareTray();
             LoadNav();
+            Clipboard.ContentChanged += Clipboard_ContentChanged;
+
         }
 
         /**
@@ -53,7 +62,15 @@ namespace XCVTransformer
         /***
          * Handlers de eventos de la ventana
         */
-
+        private async void Clipboard_ContentChanged(object sender, object e)
+        {
+            var package = Clipboard.GetContent();
+            if (package.Contains(StandardDataFormats.Text))
+            {
+                var text = await package.GetTextAsync();
+                ClipboardTextBlock.Text = text;
+            }
+        }
 
         private void LoadNav()
         {
