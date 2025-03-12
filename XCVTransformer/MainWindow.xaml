@@ -11,12 +11,10 @@
 
 
     <Grid>
-        <!-- Definir filas: una para el NavigationView y otra para el texto -->
+        <!--Layout completo, 1 fila para el nav, otra para la parte inferior-->
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <!-- Ocupa todo el espacio disponible -->
             <RowDefinition Height="Auto" />
-            <!-- Ajusta el tamaño según el contenido -->
         </Grid.RowDefinitions>
 
         <NavigationView x:Name="navView"
@@ -26,6 +24,7 @@
                         Grid.Row="0">
             <NavigationView.PaneCustomContent>
                 <Grid Width="Auto">
+                    <!--Layout para centrar los navItems horizontalmente-->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -48,8 +47,9 @@
         </NavigationView>
 
         <Grid  Height="120" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions ="*, Auto, *" Grid.Row="1">
+            <!--Layout para la parte inferior-->
             <TextBlock x:Name="ClipboardTextBlock" 
-               Text="Texto inicial" 
+               Text="{x:Bind ClipboardText, Mode=OneWay}"
                HorizontalAlignment="Center" 
                VerticalAlignment="Center"
                FontSize="16"
@@ -57,24 +57,4 @@
                Grid.Column="1"/>
         </Grid>
     </Grid>
-
-
-
-    <!-- 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-        <PasswordBox Name="passworBoxWithRevealmode" Width="200" Margin="0,0,8,0"
-            PasswordRevealMode="Visible" AutomationProperties.Name="Pasa al portapapeles"/>
-        <CheckBox Name="revealModeCheckBox" IsChecked="False"
-            Checked="RevealModeCheckbox_Changed" Unchecked="RevealModeCheckbox_Changed"/>
-
-    </StackPanel>
-    
-    <TextBlock Text="Desarrollado por XCVTransformer"
-   HorizontalAlignment="Center"
-   VerticalAlignment="Center"
-   Margin="0,10,0,10"
-   Grid.Column="1"
-   Grid.Row="1"/>
-    -->
 </Window>

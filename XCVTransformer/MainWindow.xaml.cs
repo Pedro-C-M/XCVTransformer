@@ -9,13 +9,14 @@ using WinRT.Interop;
 using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
+using XCVTransformer.Workers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace XCVTransformer
 {
-    public sealed partial class MainWindow : Window
+    public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         //Se puede configurar aqui el ancho y alto de la ventana
         const int windowWidth = 600;
@@ -25,7 +26,11 @@ namespace XCVTransformer
         private IntPtr hWnd;//Atr del handler de la ventana principal
         private TrayManager trayManager;
 
-        //Cosas de portapapeles
+        private ClipboardTaker clipboardTaker;
+
+
+        public string ClipboardText { get; set; } = "Esperando texto...";
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -35,8 +40,10 @@ namespace XCVTransformer
             this.InitializeComponent();
             PrepareTray();
             LoadNav();
-            Clipboard.ContentChanged += Clipboard_ContentChanged;
 
+            // Inicializar y suscribirse al ClipboardListener
+            clipboardTaker = new ClipboardTaker();
+            clipboardTaker.ClipboardTextChanged += OnClipboardTextChanged;
         }
 
         /**
@@ -62,14 +69,16 @@ namespace XCVTransformer
         /***
          * Handlers de eventos de la ventana
         */
-        private async void Clipboard_ContentChanged(object sender, object e)
+
+        // Método que recibe el evento con el texto copiado
+        private void OnClipboardTextChanged(object sender, string text)
         {
-            var package = Clipboard.GetContent();
-            if (package.Contains(StandardDataFormats.Text))
+            // Asegura que la actualización se realice en el hilo principal de la UI
+            DispatcherQueue.TryEnqueue(() =>
             {
-                var text = await package.GetTextAsync();
-                ClipboardTextBlock.Text = text;
-            }
+                ClipboardText = text;
+                OnPropertyChanged(nameof(ClipboardText)); // Notificar que la propiedad cambió
+            });
         }
 
         private void LoadNav()
