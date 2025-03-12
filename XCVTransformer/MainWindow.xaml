@@ -46,14 +46,19 @@
             <Frame x:Name="contentFrame"/>
         </NavigationView>
 
-        <Grid  Height="120" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions ="*, Auto, *" Grid.Row="1">
+        <Grid  Height="200" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions ="*,Auto, Auto, *" Grid.Row="1">
             <!--Layout para la parte inferior-->
+            <TextBox AutomationProperties.Name="simple TextBox"  
+                     Grid.Row="1"
+                     Grid.Column="1"
+                     TextChanged="OnTextChanged"/>
+            
             <TextBlock x:Name="ClipboardTextBlock" 
                Text="{x:Bind ClipboardText, Mode=OneWay}"
                HorizontalAlignment="Center" 
                VerticalAlignment="Center"
                FontSize="16"
-               Grid.Row="1"
+               Grid.Row="2"
                Grid.Column="1"/>
         </Grid>
     </Grid>

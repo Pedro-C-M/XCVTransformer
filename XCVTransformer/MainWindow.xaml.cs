@@ -24,8 +24,9 @@ namespace XCVTransformer
         //Marca la última opción del Nav seleccionada, esto para marcar el botón como selected
         private NavigationViewItem _lastSelectedItem = null;
 
-        //Propiedad bindeada al textBlock de MainWindow
+        //Propiedades bindeadas
         public string ClipboardText { get; set; } = "Esperando texto...";
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -52,6 +53,13 @@ namespace XCVTransformer
                 ClipboardText = text;
                 OnPropertyChanged(nameof(ClipboardText));
             });
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            System.Diagnostics.Debug.WriteLine($"Texto cambiado: {textBox.Text}");
+            ClipboardLoader.LoadTextToClipboard(textBox.Text);
         }
 
         /**
