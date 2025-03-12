@@ -10,33 +10,55 @@
     Title="XCVTransformer">
 
 
-    <NavigationView x:Name="navView"
-                PaneDisplayMode="Top"
-                IsBackButtonVisible="Collapsed"
-                IsSettingsVisible="False">
-        <!-- Personalización del contenido para centrar botones -->
-        <NavigationView.PaneCustomContent>
-            <Grid Width="Auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+    <Grid>
+        <!-- Definir filas: una para el NavigationView y otra para el texto -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Ocupa todo el espacio disponible -->
+            <RowDefinition Height="Auto" />
+            <!-- Ajusta el tamaño según el contenido -->
+        </Grid.RowDefinitions>
 
-                <NavigationViewItem 
-                    Content="Traducir" Tag="TranslatorPage" 
-                    Grid.Column="1"
-                    Tapped="NavItemTapped"/>
-                <NavigationViewItem 
-                    Content="Opciones" Tag="OptionsPage" 
-                    Grid.Column="2"  
-                    Tapped="NavItemTapped"/>
-            </Grid>
-        </NavigationView.PaneCustomContent>
+        <NavigationView x:Name="navView"
+                        PaneDisplayMode="Top"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="False"
+                        Grid.Row="0">
+            <NavigationView.PaneCustomContent>
+                <Grid Width="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-        <Frame x:Name="contentFrame"/>
-    </NavigationView>
+                    <NavigationViewItem 
+                        Content="Traducir" Tag="TranslatorPage" 
+                        Grid.Column="1"
+                        Tapped="NavItemTapped"/>
+                    <NavigationViewItem 
+                        Content="Opciones" Tag="OptionsPage" 
+                        Grid.Column="2"  
+                        Tapped="NavItemTapped"/>
+                </Grid>
+            </NavigationView.PaneCustomContent>
+
+            <Frame x:Name="contentFrame"/>
+        </NavigationView>
+
+        <Grid  Height="120" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions ="*, Auto, *" Grid.Row="1">
+            
+            <TextBlock Text="Desarrollado por XCVTransformer"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Margin="0,10,0,10"
+               Grid.Column="1"
+               Grid.Row="1"/>
+        </Grid>
+    </Grid>
+
+
 
     <!-- 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">

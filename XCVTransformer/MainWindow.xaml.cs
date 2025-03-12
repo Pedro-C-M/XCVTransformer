@@ -16,8 +16,8 @@ namespace XCVTransformer
     public sealed partial class MainWindow : Window
     {
         //Se puede configurar aqui el ancho y alto de la ventana
-        const int windowWidth = 900;
-        const int windowHeight = 900;
+        const int windowWidth = 600;
+        const int windowHeight = 800;
 
 
         private IntPtr hWnd;//Atr del handler de la ventana principal
