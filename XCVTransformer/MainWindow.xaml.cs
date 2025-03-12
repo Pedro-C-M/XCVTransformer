@@ -3,16 +3,11 @@ using System.ComponentModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media.Animation;
-using Windows.ApplicationModel.DataTransfer;
 using WinRT.Interop;
 using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
 using XCVTransformer.Workers;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace XCVTransformer
 {
@@ -22,15 +17,15 @@ namespace XCVTransformer
         const int windowWidth = 600;
         const int windowHeight = 800;
 
-
         private IntPtr hWnd;//Atr del handler de la ventana principal
         private TrayManager trayManager;
+        private ClipboardTaker clipboardTaker = new ClipboardTaker();
 
-        private ClipboardTaker clipboardTaker;
+        //Marca la última opción del Nav seleccionada, esto para marcar el botón como selected
+        private NavigationViewItem _lastSelectedItem = null;
 
-
+        //Propiedad bindeada al textBlock de MainWindow
         public string ClipboardText { get; set; } = "Esperando texto...";
-
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -41,9 +36,22 @@ namespace XCVTransformer
             PrepareTray();
             LoadNav();
 
-            // Inicializar y suscribirse al ClipboardListener
-            clipboardTaker = new ClipboardTaker();
+            //Subscribimos a la escucha del portapapeles
             clipboardTaker.ClipboardTextChanged += OnClipboardTextChanged;
+        }
+        
+        /**
+         * Método subscrito al ClipboardTaker, cuando algo se copia o pega en el portapapeles, toma ejecución,
+         * cambia la propiedad bindeada text de la ventana a lo recibido.
+         * Hay que cambiar al hilo de Dispatcher para hacer cambios de la UI
+         */
+        private void OnClipboardTextChanged(object sender, string text)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                ClipboardText = text;
+                OnPropertyChanged(nameof(ClipboardText));
+            });
         }
 
         /**
@@ -67,44 +75,28 @@ namespace XCVTransformer
         }
 
         /***
-         * Handlers de eventos de la ventana
+         * ---------------------------------------Handlers de eventos de la ventana-------------------------------------------------------
         */
 
-        // Método que recibe el evento con el texto copiado
-        private void OnClipboardTextChanged(object sender, string text)
-        {
-            // Asegura que la actualización se realice en el hilo principal de la UI
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                ClipboardText = text;
-                OnPropertyChanged(nameof(ClipboardText)); // Notificar que la propiedad cambió
-            });
-        }
-
+        /**
+         * Carga la página que quiero en inicio en el frame, en este caso TranslatorPage
+         */
         private void LoadNav()
         {
             contentFrame.Navigate(typeof(TranslatorPage));
         }
 
-        private NavigationViewItem _lastSelectedItem = null; // Variable para almacenar el último item seleccionado
+        /**
+         * Cada vez que un NavItem se toque, en base al sender se navegará a la página
+         * correspondiente. Esto se saca del tag
+         */
         private void NavItemTapped(object sender, TappedRoutedEventArgs e)
         {
             var tappedItem = sender as NavigationViewItem;
 
             if (tappedItem != null)
             {
-                // Si hay un item previamente seleccionado, desmarcarlo
-                if (_lastSelectedItem != null)
-                {
-                    _lastSelectedItem.IsSelected = false;
-                }
-
-                // Marcar el nuevo item como seleccionado
-                tappedItem.IsSelected = true;
-
-                // Actualizar el último item seleccionado
-                _lastSelectedItem = tappedItem;
-
+                alternateLastClickNavButton(tappedItem);
                 string tag = tappedItem.Tag.ToString();
 
                 if (tag == "TranslatorPage")
@@ -130,5 +122,28 @@ namespace XCVTransformer
             }
         }
         */
+
+        //---------------------------------------AUX METHODS-------------------------------------
+
+        /**
+         * Quita el anterior como selected
+         * Marca el nuevo NavItem como selected 
+         * Cambia el valor de lastSelectedItem que representa el último botón tocado para poder 
+         * quitarle luego el selected.
+         */
+        private void alternateLastClickNavButton(NavigationViewItem tappedItem)
+        {
+            // Si hay un item previamente seleccionado, desmarcarlo
+            if (_lastSelectedItem != null)
+            {
+                _lastSelectedItem.IsSelected = false;
+            }
+
+            // Marcar el nuevo item como seleccionado
+            tappedItem.IsSelected = true;
+
+            // Actualizar el último item seleccionado
+            _lastSelectedItem = tappedItem;
+        }
     }
 }

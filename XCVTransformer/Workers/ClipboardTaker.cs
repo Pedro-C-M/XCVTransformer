@@ -14,17 +14,19 @@ namespace XCVTransformer.Workers
 
         public ClipboardTaker()
         {
-            // Suscribirse al evento del portapapeles
             Clipboard.ContentChanged += OnClipboardContentChanged;
         }
 
+        /**
+         * Obtenemos el texto que hay en el portapapeles
+         */
         private async void OnClipboardContentChanged(object sender, object e)
         {
             var package = Clipboard.GetContent();
             if (package.Contains(StandardDataFormats.Text))
             {
                 string text = await package.GetTextAsync();
-                ClipboardTextChanged?.Invoke(this, text); // Disparar el evento con el texto copiado
+                ClipboardTextChanged?.Invoke(this, text);
             }
         }
     }
