@@ -12,6 +12,8 @@ namespace XCVTransformer.Workers
     {
         public event EventHandler<string> ClipboardTextChanged;
 
+
+        private Boolean transformingFlag = false; //Flag para controlar bloqueos del método y no causar bucles
         public ClipboardTaker()
         {
             Clipboard.ContentChanged += OnClipboardContentChanged;
@@ -22,11 +24,30 @@ namespace XCVTransformer.Workers
          */
         private async void OnClipboardContentChanged(object sender, object e)
         {
-            var package = Clipboard.GetContent();
-            if (package.Contains(StandardDataFormats.Text))
+            if (transformingFlag)
             {
-                string text = await package.GetTextAsync();
-                ClipboardTextChanged?.Invoke(this, text);
+                return;
+            }
+            transformingFlag = true;
+
+            try
+            {
+                var package = Clipboard.GetContent();
+                if (package.Contains(StandardDataFormats.Text))
+                {
+                    string text = await package.GetTextAsync();
+                    //ClipboardLoader.LoadTextToClipboard(text);
+                    await ClipboardLoader.MockTransformTime(1000);
+                    ClipboardTextChanged?.Invoke(this, text);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al acceder al portapapeles: {ex.Message}");
+            }
+            finally
+            {
+                transformingFlag = false;
             }
         }
     }

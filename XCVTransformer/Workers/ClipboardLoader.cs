@@ -1,4 +1,7 @@
-﻿using Windows.ApplicationModel.DataTransfer;
+﻿using System.Threading.Tasks;
+using System;
+using Windows.ApplicationModel.DataTransfer;
+using System.Diagnostics;
 
 namespace XCVTransformer.Workers
 {
@@ -13,6 +16,13 @@ namespace XCVTransformer.Workers
             dataPackage.SetText(text); 
 
             Clipboard.SetContent(dataPackage);
+        }
+
+
+        public static async Task MockTransformTime(int ms)
+        {
+            await Task.Delay(ms);
+            Debug.WriteLine($"Esperado durante {ms} milisegundos");
         }
     }
 }
