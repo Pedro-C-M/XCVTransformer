@@ -46,7 +46,7 @@
             <Frame x:Name="contentFrame"/>
         </NavigationView>
 
-        <Grid  Height="200" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions ="*,Auto, Auto, *" Grid.Row="1">
+        <Grid  Height="100" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions ="*,Auto, Auto, *" Grid.Row="1">
             <!--Layout para la parte inferior-->
             <TextBox AutomationProperties.Name="simple TextBox"  
                      Grid.Row="1"
@@ -60,6 +60,7 @@
                FontSize="16"
                Grid.Row="2"
                Grid.Column="1"/>
+            
         </Grid>
     </Grid>
 </Window>

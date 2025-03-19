@@ -21,13 +21,12 @@ namespace XCVTransformer.Workers
 
         /**
          * Obtenemos el texto que hay en el portapapeles
+         * Utiliza control de bloqueo para que mientras se está transformando (cosa asíncrona)
+         * no se permita volver a lanzar otra transformación
          */
         private async void OnClipboardContentChanged(object sender, object e)
         {
-            if (transformingFlag)
-            {
-                return;
-            }
+            if (transformingFlag) return;//Si ya estamos transformando abortamos
             transformingFlag = true;
 
             try
@@ -36,14 +35,14 @@ namespace XCVTransformer.Workers
                 if (package.Contains(StandardDataFormats.Text))
                 {
                     string text = await package.GetTextAsync();
-                    //ClipboardLoader.LoadTextToClipboard(text);
+                    ClipboardLoader.LoadTextToClipboard(text);
                     await ClipboardLoader.MockTransformTime(1000);
                     ClipboardTextChanged?.Invoke(this, text);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al acceder al portapapeles: {ex.Message}");
+                Console.WriteLine($"Error en evento de cambio de portapapeles: {ex.Message}");
             }
             finally
             {

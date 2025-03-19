@@ -9,6 +9,8 @@ namespace XCVTransformer.Workers
     {
         /**
          * Este método se encarga de cargar una cadena al portapapeles
+         * 
+         * És síncrono SetContent()
          */
         public static void LoadTextToClipboard(string text)
         {
