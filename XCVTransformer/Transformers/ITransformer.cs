@@ -1,7 +1,9 @@
-﻿namespace XCVTransformer.Transformers
+﻿using System.Threading.Tasks;
+
+namespace XCVTransformer.Transformers
 {
     public interface ITransformer
     {
-        string Transform(string toTransform);
+        Task<string> Transform(string toTransform);
     }
 }

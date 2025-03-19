@@ -59,7 +59,7 @@ namespace XCVTransformer
         {
             var textBox = sender as TextBox;
             System.Diagnostics.Debug.WriteLine($"Texto cambiado: {textBox.Text}");
-            ClipboardLoader.LoadTextToClipboard(textBox.Text);
+            clipboardTaker.loader.LoadTextToClipboard(textBox.Text);
         }
 
         /**

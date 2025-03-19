@@ -11,11 +11,12 @@ namespace XCVTransformer.Workers
     class ClipboardTaker
     {
         public event EventHandler<string> ClipboardTextChanged;
-
+        internal ClipboardLoader loader;
 
         private Boolean transformingFlag = false; //Flag para controlar bloqueos del método y no causar bucles
         public ClipboardTaker()
         {
+            this.loader = new ClipboardLoader();
             Clipboard.ContentChanged += OnClipboardContentChanged;
         }
 
@@ -35,7 +36,7 @@ namespace XCVTransformer.Workers
                 if (package.Contains(StandardDataFormats.Text))
                 {
                     string text = await package.GetTextAsync();
-                    ClipboardLoader.LoadTextToClipboard(text);
+                    loader.LoadTextToClipboard(text);
                     await ClipboardLoader.MockTransformTime(1000);
                     ClipboardTextChanged?.Invoke(this, text);
                 }
