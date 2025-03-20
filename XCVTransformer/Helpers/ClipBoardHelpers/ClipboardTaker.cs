@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 
-namespace XCVTransformer.Workers
+namespace XCVTransformer.Helpers
 {
     class ClipboardTaker
     {
         public event EventHandler<string> ClipboardTextChanged;
         internal ClipboardLoader loader;
 
-        private Boolean transformingFlag = false; //Flag para controlar bloqueos del método y no causar bucles
+        private bool transformingFlag = false; //Flag para controlar bloqueos del método y no causar bucles
         public ClipboardTaker()
         {
-            this.loader = new ClipboardLoader();
+            loader = new ClipboardLoader();
             Clipboard.ContentChanged += OnClipboardContentChanged;
         }
 
@@ -36,8 +31,8 @@ namespace XCVTransformer.Workers
                 if (package.Contains(StandardDataFormats.Text))
                 {
                     string text = await package.GetTextAsync();
-                    loader.LoadTextToClipboard(text);
-                    await ClipboardLoader.MockTransformTime(1000);
+                    await loader.LoadTextToClipboard(text);
+                    //await ClipboardLoader.MockTransformTime(1000);
                     ClipboardTextChanged?.Invoke(this, text);
                 }
             }

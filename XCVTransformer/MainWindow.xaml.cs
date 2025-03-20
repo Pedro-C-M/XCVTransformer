@@ -7,7 +7,6 @@ using WinRT.Interop;
 using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
-using XCVTransformer.Workers;
 
 namespace XCVTransformer
 {
@@ -53,13 +52,6 @@ namespace XCVTransformer
                 ClipboardText = text;
                 OnPropertyChanged(nameof(ClipboardText));
             });
-        }
-
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            var textBox = sender as TextBox;
-            System.Diagnostics.Debug.WriteLine($"Texto cambiado: {textBox.Text}");
-            clipboardTaker.loader.LoadTextToClipboard(textBox.Text);
         }
 
         /**

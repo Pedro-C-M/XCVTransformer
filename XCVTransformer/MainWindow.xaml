@@ -50,8 +50,7 @@
             <!--Layout para la parte inferior-->
             <TextBox AutomationProperties.Name="simple TextBox"  
                      Grid.Row="1"
-                     Grid.Column="1"
-                     TextChanged="OnTextChanged"/>
+                     Grid.Column="1"/>
             
             <TextBlock x:Name="ClipboardTextBlock" 
                Text="{x:Bind ClipboardText, Mode=OneWay}"

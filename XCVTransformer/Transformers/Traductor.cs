@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,9 @@ namespace XCVTransformer.Transformers
                 var result = await response.Content.ReadAsStringAsync();
 
                 var translatedText = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
+
+                Debug.WriteLine("Nueva traducción de "+ toTransform);
+
                 return translatedText;
             }
         }
