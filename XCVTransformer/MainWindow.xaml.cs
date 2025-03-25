@@ -26,12 +26,6 @@ namespace XCVTransformer
         //Marca la última opción del Nav seleccionada, esto para marcar el botón como selected
         private NavigationViewItem _lastSelectedItem = null;
 
-        //Propiedades bindeadas
-        public string ClipboardText { get; set; } = "Esperando texto...";
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public MainWindow()
         {
@@ -44,26 +38,15 @@ namespace XCVTransformer
             LoadNav();
         }
 
+        /**
+         * Asigna al grid root de la ventana el DataContext del view model
+         */
         private void AsignDataContext()
         {
             if(this.Content is FrameworkElement rootElement)
             {
                 rootElement.DataContext = ViewModel;
             }
-        }
-
-        /**
-         * Método subscrito al ClipboardTaker, cuando algo se copia o pega en el portapapeles, toma ejecución,
-         * cambia la propiedad bindeada text de la ventana a lo recibido.
-         * Hay que cambiar al hilo de Dispatcher para hacer cambios de la UI
-         */
-        private void OnClipboardTextChanged(object sender, string text)
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                ClipboardText = text;
-                OnPropertyChanged(nameof(ClipboardText));
-            });
         }
 
         /**
