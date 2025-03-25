@@ -89,6 +89,7 @@ namespace XCVTransformer.ViewModels
             Type targetPage = tag switch
             {
                 "TranslatorPage" => typeof(TranslatorPage),
+                "CodificationPage" => typeof(CodificationPage),
                 "OptionsPage" => typeof(OptionsPage),
                 _ => null
             };

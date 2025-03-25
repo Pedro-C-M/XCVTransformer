@@ -29,21 +29,58 @@
 
         <!-- Contenedor para el NavigationView -->
         <NavigationView x:Name="navView" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Grid.Row="1">
+            <NavigationView.Resources>
+                <Style TargetType="NavigationView">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="NavigationView">
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Barra de navegación superior -->
+                                    <Grid x:Name="TopNavGrid" Grid.Row="0" 
+                                  HorizontalAlignment="Stretch"
+                                  Background="{ThemeResource NavigationViewTopPaneBackground}">
+                                        <ContentPresenter x:Name="TopNavContentPresenter"
+                                          Content="{TemplateBinding PaneCustomContent}"
+                                          HorizontalAlignment="Center"/>
+                                    </Grid>
+
+                                    <!-- Área de contenido - Aseguramos expansión completa -->
+                                    <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <ContentPresenter x:Name="ContentFramePresenter"
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Stretch" 
+                                          VerticalAlignment="Stretch"
+                                          Margin="0"/>
+                                    </Grid>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </NavigationView.Resources>
+
             <NavigationView.PaneCustomContent>
                 <Grid Width="Auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <NavigationViewItem x:Name="TranslatorPage" Content="Traducir" Tag="TranslatorPage" Grid.Column="1" Tapped="NavItemTapped"/>
-                    <NavigationViewItem x:Name="OptionsPage" Content="Opciones" Tag="OptionsPage" Grid.Column="2" Tapped="NavItemTapped"/>
+                    <NavigationViewItem x:Name="CodificationPage" Content="Codificar" Tag="CodificationPage" Grid.Column="2" Tapped="NavItemTapped"/>
+                    <NavigationViewItem x:Name="OptionsPage" Content="Opciones" Tag="OptionsPage" Grid.Column="3" Tapped="NavItemTapped"/>
                 </Grid>
             </NavigationView.PaneCustomContent>
 
-            <Frame x:Name="contentFrame"/>
+            <Frame x:Name="contentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </NavigationView>
 
         <!-- Parte de abajo con texto para probar
