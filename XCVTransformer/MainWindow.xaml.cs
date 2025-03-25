@@ -8,6 +8,7 @@ using WinRT.Interop;
 using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
+using XCVTransformer.ViewModels;
 
 namespace XCVTransformer
 {
@@ -19,7 +20,8 @@ namespace XCVTransformer
 
         private IntPtr hWnd;//Atr del handler de la ventana principal
         private TrayManager trayManager;
-        private ClipboardTaker clipboardTaker = new ClipboardTaker();
+
+        public MainViewModel ViewModel { get; }
 
         //Marca la última opción del Nav seleccionada, esto para marcar el botón como selected
         private NavigationViewItem _lastSelectedItem = null;
@@ -34,13 +36,22 @@ namespace XCVTransformer
         public MainWindow()
         {
             this.InitializeComponent();
+
+            ViewModel = new MainViewModel();
+            AsignDataContext();
+
             PrepareTray();
             LoadNav();
-
-            //Subscribimos a la escucha del portapapeles
-            clipboardTaker.ClipboardTextChanged += OnClipboardTextChanged;
         }
-        
+
+        private void AsignDataContext()
+        {
+            if(this.Content is FrameworkElement rootElement)
+            {
+                rootElement.DataContext = ViewModel;
+            }
+        }
+
         /**
          * Método subscrito al ClipboardTaker, cuando algo se copia o pega en el portapapeles, toma ejecución,
          * cambia la propiedad bindeada text de la ventana a lo recibido.
@@ -78,11 +89,7 @@ namespace XCVTransformer
         /***
          * ---------------------------------------Handlers de eventos de la ventana-------------------------------------------------------
         */
-        private void SwitchActivacionToggled(object sender, RoutedEventArgs e)
-        {
-            bool estadoSwitch = switchActivacion.IsOn;
-            this.clipboardTaker.ChangeTransformerState(estadoSwitch);
-        }
+       
 
         /**
          * Carga la página que quiero en inicio en el frame, en este caso TranslatorPage

@@ -10,7 +10,7 @@
     Title="XCVTransformer">
 
 
-    <Grid>
+    <Grid x:Name="RootGrid">
         <!--Layout completo, 2 filas: 1 para el switch, y otra para la parte de navegación-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,7 +23,7 @@
         <Grid Grid.Row="0" Background="LightGray" Padding="10">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="Activar transformador" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ToggleSwitch x:Name="switchActivacion" OnContent="Encendido" OffContent="Apagado" VerticalAlignment="Center" Toggled="SwitchActivacionToggled"/>
+                <ToggleSwitch IsOn="{Binding IsTransformerOn, Mode=TwoWay}" OnContent="Encendido" OffContent="Apagado" VerticalAlignment="Center"/> 
             </StackPanel>
         </Grid>
 

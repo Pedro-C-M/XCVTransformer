@@ -3,7 +3,7 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace XCVTransformer.Helpers
 {
-    class ClipboardTaker
+    public class ClipboardTaker
     {
         private bool transformerOn;//Flag para saber si está encendido o no el transformador
 
