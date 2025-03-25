@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using WinRT.Interop;
 using XCVTransformer.AuxClasses;
@@ -12,7 +13,7 @@ using XCVTransformer.ViewModels;
 
 namespace XCVTransformer
 {
-    public sealed partial class MainWindow : Window, INotifyPropertyChanged
+    public sealed partial class MainWindow : Window
     {
         //Se puede configurar aqui el ancho y alto de la ventana
         const int windowWidth = 600;
@@ -23,15 +24,15 @@ namespace XCVTransformer
 
         public MainViewModel ViewModel { get; }
 
-        //Marca la última opción del Nav seleccionada, esto para marcar el botón como selected
-        private NavigationViewItem _lastSelectedItem = null;
+        //Marca la opción del Nav seleccionada inicialmente, esto para marcar el botón como selected y ver la page
+        private string startingPage = "TranslatorPage";
 
 
         public MainWindow()
         {
             this.InitializeComponent();
 
-            ViewModel = new MainViewModel();
+            ViewModel = new MainViewModel(contentFrame);
             AsignDataContext();
 
             PrepareTray();
@@ -75,16 +76,17 @@ namespace XCVTransformer
        
 
         /**
-         * Carga la página que quiero en inicio en el frame, en este caso TranslatorPage
+         * Carga la página que quiero en inicio en el frame sincroniza con el VM, en este caso TranslatorPage
          */
         private void LoadNav()
         {
             contentFrame.Navigate(typeof(TranslatorPage));
+            alternateLastClickNavButton("", startingPage);
+            ViewModel.LastSelectedNavItem = startingPage;
         }
 
         /**
-         * Cada vez que un NavItem se toque, en base al sender se navegará a la página
-         * correspondiente. Esto se saca del tag
+         * Cada vez que un NavItem se toque, se notifica al ViewModel para que navegue
          */
         private void NavItemTapped(object sender, TappedRoutedEventArgs e)
         {
@@ -92,17 +94,11 @@ namespace XCVTransformer
 
             if (tappedItem != null)
             {
-                alternateLastClickNavButton(tappedItem);
-                string tag = tappedItem.Tag.ToString();
+                string lastTag = ViewModel.LastSelectedNavItem;
+                string pageTag = tappedItem.Tag.ToString();
+                ViewModel.Navigate(pageTag);
 
-                if (tag == "TranslatorPage")
-                {
-                    contentFrame.Navigate(typeof(TranslatorPage));
-                }
-                else if (tag == "OptionsPage")
-                {
-                    contentFrame.Navigate(typeof(OptionsPage));
-                }
+                alternateLastClickNavButton(lastTag, pageTag);
             }
         }
         /**
@@ -127,19 +123,16 @@ namespace XCVTransformer
          * Cambia el valor de lastSelectedItem que representa el último botón tocado para poder 
          * quitarle luego el selected.
          */
-        private void alternateLastClickNavButton(NavigationViewItem tappedItem)
+        private void alternateLastClickNavButton(string lastTag, string pageTag)
         {
             // Si hay un item previamente seleccionado, desmarcarlo
-            if (_lastSelectedItem != null)
+            if (lastTag != null && lastTag != "")
             {
-                _lastSelectedItem.IsSelected = false;
+                var lastNavItem = (NavigationViewItem)navView.FindName(lastTag);
+                lastNavItem.IsSelected = false;
             }
-
-            // Marcar el nuevo item como seleccionado
-            tappedItem.IsSelected = true;
-
-            // Actualizar el último item seleccionado
-            _lastSelectedItem = tappedItem;
+            var newNavItem = (NavigationViewItem)navView.FindName(pageTag);
+            newNavItem.IsSelected = true;
         }
     }
 }

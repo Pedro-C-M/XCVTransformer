@@ -38,8 +38,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <NavigationViewItem Content="Traducir" Tag="TranslatorPage" Grid.Column="1" Tapped="NavItemTapped"/>
-                    <NavigationViewItem Content="Opciones" Tag="OptionsPage" Grid.Column="2" Tapped="NavItemTapped"/>
+                    <NavigationViewItem x:Name="TranslatorPage" Content="Traducir" Tag="TranslatorPage" Grid.Column="1" Tapped="NavItemTapped"/>
+                    <NavigationViewItem x:Name="OptionsPage" Content="Opciones" Tag="OptionsPage" Grid.Column="2" Tapped="NavItemTapped"/>
                 </Grid>
             </NavigationView.PaneCustomContent>
 

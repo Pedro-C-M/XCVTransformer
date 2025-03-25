@@ -1,30 +1,42 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using Microsoft.UI.Xaml;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
-using WinRT.Interop;
-using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
-using XCVTransformer.ViewModels;
+
 
 namespace XCVTransformer.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        //-------------------------ATRIBUTOS DEL MVVM-------------------------
+
         private ClipboardTaker clipboardTaker;
         private bool isTransformerOn;
+        private string lastSelectedNavItem;
 
 
-        public MainViewModel()
+        //-------------------------CLASE Y METODOS-------------------------
+
+        private readonly Frame _contentFrame;
+
+        public MainViewModel(Frame contentFrame)
         {
             this.clipboardTaker = new ClipboardTaker();
+            this._contentFrame = contentFrame;
+
+            NavigateCommand = new RelayCommand<string>(Navigate);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-        //-------------------------PROPERTIES-------------------------
+        //-------------------------PROPERTIES DEL MVVM-------------------------
 
         public ClipboardTaker ClipboardTaker
         {
@@ -51,13 +63,42 @@ namespace XCVTransformer.ViewModels
             get; 
             set; 
         } = "Esperando texto...";
-
-        //-------------------------MAS-------------------------
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
+     
+        public string LastSelectedNavItem
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => lastSelectedNavItem;
+            set
+            {
+                if(lastSelectedNavItem != value)
+                {
+                    lastSelectedNavItem = value;
+                    OnPropertyChanged(nameof(LastSelectedNavItem));
+                }
+            }
         }
+
+        //-------------------------NAVEGACIÓN-------------------------
+
+        public ICommand NavigateCommand { get; }
+
+        public void Navigate(string tag)
+        {
+            // Evita re-seleccionar el mismo elemento
+            if (tag == null || tag == LastSelectedNavItem) return; 
+
+            Type targetPage = tag switch
+            {
+                "TranslatorPage" => typeof(TranslatorPage),
+                "OptionsPage" => typeof(OptionsPage),
+                _ => null
+            };
+
+            if (targetPage != null)
+            {
+                _contentFrame.Navigate(targetPage);
+                LastSelectedNavItem = tag;
+            }
+        }
+
     }
 }
