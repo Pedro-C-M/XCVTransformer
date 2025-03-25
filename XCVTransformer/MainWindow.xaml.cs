@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -77,6 +78,11 @@ namespace XCVTransformer
         /***
          * ---------------------------------------Handlers de eventos de la ventana-------------------------------------------------------
         */
+        private void SwitchActivacionToggled(object sender, RoutedEventArgs e)
+        {
+            bool estadoSwitch = switchActivacion.IsOn;
+            this.clipboardTaker.ChangeTransformerState(estadoSwitch);
+        }
 
         /**
          * Carga la página que quiero en inicio en el frame, en este caso TranslatorPage

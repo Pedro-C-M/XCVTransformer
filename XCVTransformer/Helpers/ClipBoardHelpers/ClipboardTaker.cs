@@ -5,6 +5,8 @@ namespace XCVTransformer.Helpers
 {
     class ClipboardTaker
     {
+        private bool transformerOn;//Flag para saber si está encendido o no el transformador
+
         public event EventHandler<string> ClipboardTextChanged;
         internal ClipboardLoader loader;
 
@@ -15,6 +17,11 @@ namespace XCVTransformer.Helpers
             Clipboard.ContentChanged += OnClipboardContentChanged;
         }
 
+        internal void ChangeTransformerState(bool newState)
+        {
+            this.transformerOn = newState;
+        }
+
         /**
          * Obtenemos el texto que hay en el portapapeles
          * Utiliza control de bloqueo para que mientras se está transformando (cosa asíncrona)
@@ -22,6 +29,7 @@ namespace XCVTransformer.Helpers
          */
         private async void OnClipboardContentChanged(object sender, object e)
         {
+            if (!this.transformerOn) return;//Si está apagado el trasnformador fuera
             if (transformingFlag) return;//Si ya estamos transformando abortamos
             transformingFlag = true;
 

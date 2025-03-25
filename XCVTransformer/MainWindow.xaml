@@ -11,20 +11,26 @@
 
 
     <Grid>
-        <!--Layout completo, 1 fila para el nav, otra para la parte inferior-->
+        <!--Layout completo, 2 filas: 1 para el switch, y otra para la parte de navegación-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <!-- Área con el Switch -->
+            <RowDefinition Height="*" />
+            <!-- Navegación -->
         </Grid.RowDefinitions>
 
-        <NavigationView x:Name="navView"
-                        PaneDisplayMode="Top"
-                        IsBackButtonVisible="Collapsed"
-                        IsSettingsVisible="False"
-                        Grid.Row="0">
+        <!-- Área con el Switch entre la barra de título y el área de navegación -->
+        <Grid Grid.Row="0" Background="LightGray" Padding="10">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Activar transformador" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ToggleSwitch x:Name="switchActivacion" OnContent="Encendido" OffContent="Apagado" VerticalAlignment="Center" Toggled="SwitchActivacionToggled"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Contenedor para el NavigationView -->
+        <NavigationView x:Name="navView" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" Grid.Row="1">
             <NavigationView.PaneCustomContent>
                 <Grid Width="Auto">
-                    <!--Layout para centrar los navItems horizontalmente-->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -32,34 +38,19 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <NavigationViewItem 
-                        Content="Traducir" Tag="TranslatorPage" 
-                        Grid.Column="1"
-                        Tapped="NavItemTapped"/>
-                    <NavigationViewItem 
-                        Content="Opciones" Tag="OptionsPage" 
-                        Grid.Column="2"  
-                        Tapped="NavItemTapped"/>
+                    <NavigationViewItem Content="Traducir" Tag="TranslatorPage" Grid.Column="1" Tapped="NavItemTapped"/>
+                    <NavigationViewItem Content="Opciones" Tag="OptionsPage" Grid.Column="2" Tapped="NavItemTapped"/>
                 </Grid>
             </NavigationView.PaneCustomContent>
 
             <Frame x:Name="contentFrame"/>
         </NavigationView>
 
-        <Grid  Height="100" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions ="*,Auto, Auto, *" Grid.Row="1">
-            <!--Layout para la parte inferior-->
-            <TextBox AutomationProperties.Name="simple TextBox"  
-                     Grid.Row="1"
-                     Grid.Column="1"/>
-            
-            <TextBlock x:Name="ClipboardTextBlock" 
-               Text="{x:Bind ClipboardText, Mode=OneWay}"
-               HorizontalAlignment="Center" 
-               VerticalAlignment="Center"
-               FontSize="16"
-               Grid.Row="2"
-               Grid.Column="1"/>
-            
+        <!-- Parte de abajo con texto para probar
+        <Grid Height="100" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions="*, Auto, Auto, *" Grid.Row="3">
+            <TextBox AutomationProperties.Name="simple TextBox" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock x:Name="ClipboardTextBlock" Text="{x:Bind ClipboardText, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="2" Grid.Column="1"/>
         </Grid>
+        -->
     </Grid>
 </Window>
