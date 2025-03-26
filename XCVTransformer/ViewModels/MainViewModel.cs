@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
@@ -13,9 +14,13 @@ namespace XCVTransformer.ViewModels
     {
         //-------------------------ATRIBUTOS DEL MVVM-------------------------
 
+        ///MAIN 
         private ClipboardTaker clipboardTaker;
         private bool isTransformerOn;
         private string lastSelectedNavItem;
+
+        ///TRANSLATION PAGE
+        private string initText = "Hola";
 
 
         //-------------------------CLASE Y METODOS-------------------------
@@ -37,6 +42,8 @@ namespace XCVTransformer.ViewModels
         }
 
         //-------------------------PROPERTIES DEL MVVM-------------------------
+
+        ///-----------------------------------------------------MAIN 
 
         public ClipboardTaker ClipboardTaker
         {
@@ -76,6 +83,32 @@ namespace XCVTransformer.ViewModels
                 }
             }
         }
+        ///-----------------------------------------------------TRANSLATOR PAGE 
+        public String InitText
+        {
+            get => initText;
+        }
+
+        private List<string> words = new List<string>
+            {
+                "Hola",
+                "Mundo",
+                "Prueba"
+            };
+
+        public List<string> Words
+        {
+            get => words;
+            set
+            {
+                if (words != value)
+                {
+                    words = value;
+                    OnPropertyChanged(nameof(Words));  // Notificar el cambio (aquí no se notificará la vista de forma automática)
+                }
+            }
+        }
+
 
         //-------------------------NAVEGACIÓN-------------------------
 

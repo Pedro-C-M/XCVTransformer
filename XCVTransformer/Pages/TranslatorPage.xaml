@@ -29,8 +29,22 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Idioma destino" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Text="Idiomas jaja" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="Idioma Origen" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <ListView x:Name="OrigenList" Grid.Row="1"
+                          BorderThickness="1"
+                          BorderBrush="{StaticResource LineDetail}"
+                          HorizontalAlignment="Center"
+                          ItemsSource="{Binding Words}">
+                    <!-- Enlazando la propiedad Words -->
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <TextBlock Text="{Binding}" />
+                            <!-- Cada palabra será un TextBlock -->
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -38,7 +52,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Idioma destino" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Text="Idiomas jaja" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding InitText}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
 
         </Grid>
