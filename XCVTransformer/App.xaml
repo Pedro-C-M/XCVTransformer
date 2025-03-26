@@ -7,10 +7,18 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- Diccionario de controles de XAML -->
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <!-- Other merged dictionaries here -->
+                <!-- Otros diccionarios combinados aquí -->
             </ResourceDictionary.MergedDictionaries>
-            <!-- Other app resources here -->
+            <!-- ________________________________________ PROPIEDADES/CONSTANTES ___________________________ -->
+            
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>COLORES<<<<<<<<<<<<<<<<<<<<<<<<< -->
+            <Color x:Key="LineDetail">#5df77c</Color>
+            
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>FONT STYLE<<<<<<<<<<<<<<<<<<<<<< -->
+            <FontFamily x:Key="DefaultFontFamily">Segoe UI</FontFamily>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>
