@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
+using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
 
@@ -89,12 +90,7 @@ namespace XCVTransformer.ViewModels
             get => initText;
         }
 
-        private List<string> words = new List<string>
-            {
-                "Hola",
-                "Mundo",
-                "Prueba"
-            };
+        private List<string> words = AppConstants.LanguageList;
 
         public List<string> Words
         {
