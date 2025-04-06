@@ -50,5 +50,15 @@ namespace XCVTransformer.Transformers
                 return translatedText;
             }
         }
+
+        void ITransformer.ChangeOriginCode(string newCode)
+        {
+            this.fromLanguage = newCode;
+        }
+
+        void ITransformer.ChangeEndCode(string newCode)
+        {
+            this.toLanguage = newCode;
+        }
     }
 }

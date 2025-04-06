@@ -34,7 +34,8 @@
                           BorderThickness="1"
                           BorderBrush="{StaticResource LineDetail}"
                           HorizontalAlignment="Center"
-                          ItemsSource="{Binding Words}">
+                          ItemsSource="{Binding Words}"
+                          SelectedItem="{Binding SelectedOriginLanguage, Mode=TwoWay}">
                     <!-- Enlazando la propiedad Words -->
 
                     <ListView.ItemTemplate>
@@ -52,7 +53,18 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Idioma destino" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding InitText}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <ListView x:Name="EndList" Grid.Row="1"
+                          BorderThickness="1"
+                          BorderBrush="{StaticResource LineDetail}"
+                          HorizontalAlignment="Center"
+                          ItemsSource="{Binding Words}"
+                          SelectedItem="{Binding SelectedEndLanguage, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
 
         </Grid>

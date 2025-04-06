@@ -7,7 +7,7 @@ namespace XCVTransformer.Helpers
 {
     class ClipboardLoader
     {
-        private ITransformer _transformer = new Traductor();
+        internal ITransformer _transformer = new Traductor();
 
         private string lastTransformedText = "";
         /**
@@ -28,6 +28,11 @@ namespace XCVTransformer.Helpers
             Clipboard.SetContent(dataPackage);
             lastTransformedText = transformedText;
             
+        }
+
+        internal void ReestartLastTransformedWord()
+        {
+            lastTransformedText = "";
         }
 
         /**

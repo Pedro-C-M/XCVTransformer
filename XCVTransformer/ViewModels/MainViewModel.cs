@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
@@ -22,7 +23,8 @@ namespace XCVTransformer.ViewModels
 
         ///TRANSLATION PAGE
         private string initText = "Hola";
-
+        private string selectedOriginLanguage = "es";
+        private string selectedEndLanguage = "en";
 
         //-------------------------CLASE Y METODOS-------------------------
 
@@ -100,7 +102,55 @@ namespace XCVTransformer.ViewModels
                 if (words != value)
                 {
                     words = value;
-                    OnPropertyChanged(nameof(Words));  // Notificar el cambio (aquí no se notificará la vista de forma automática)
+                    OnPropertyChanged(nameof(Words)); 
+                }
+            }
+        }
+
+        public string SelectedOriginLanguage
+        {
+            get => selectedOriginLanguage;
+            set
+            {
+                if (selectedOriginLanguage != value)
+                {
+                    string newLangCode = "es";
+                    if(AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
+                    {
+                        selectedOriginLanguage = newLangCode;
+                        Debug.WriteLine(selectedOriginLanguage);
+                        this.clipboardTaker.GetTransformer().ChangeOriginCode(selectedOriginLanguage);
+                        this.clipboardTaker.loader.ReestartLastTransformedWord();
+                        OnPropertyChanged(nameof(SelectedOriginLanguage));
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Error buscando código de lenguaje origen");
+                    }
+                }
+            }
+        }
+
+        public string SelectedEndLanguage
+        {
+            get => selectedEndLanguage;
+            set
+            {
+                if (selectedEndLanguage != value)
+                {
+                    string newLangCode = "en";
+                    if (AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
+                    {
+                        selectedEndLanguage = newLangCode;
+                        Debug.WriteLine(selectedEndLanguage);
+                        this.clipboardTaker.GetTransformer().ChangeEndCode(selectedEndLanguage);
+                        this.clipboardTaker.loader.ReestartLastTransformedWord();
+                        OnPropertyChanged(nameof(selectedEndLanguage));
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Error buscando código de lenguaje destino");
+                    }
                 }
             }
         }

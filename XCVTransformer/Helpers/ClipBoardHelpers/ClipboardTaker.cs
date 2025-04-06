@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
+using XCVTransformer.Transformers;
+
 
 namespace XCVTransformer.Helpers
 {
@@ -17,6 +20,11 @@ namespace XCVTransformer.Helpers
             Clipboard.ContentChanged += OnClipboardContentChanged;
         }
 
+        internal ITransformer GetTransformer()
+        {
+            return loader._transformer;
+        }
+
         internal void ChangeTransformerState(bool newState)
         {
             this.transformerOn = newState;
@@ -32,7 +40,6 @@ namespace XCVTransformer.Helpers
             if (!this.transformerOn) return;//Si está apagado el trasnformador fuera
             if (transformingFlag) return;//Si ya estamos transformando abortamos
             transformingFlag = true;
-
             try
             {
                 var package = Clipboard.GetContent();
