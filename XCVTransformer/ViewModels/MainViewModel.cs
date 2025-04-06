@@ -18,7 +18,7 @@ namespace XCVTransformer.ViewModels
 
         ///MAIN 
         private ClipboardTaker clipboardTaker;
-        private bool isTransformerOn;
+        private bool isTransformerOn = true;
         private string lastSelectedNavItem;
 
         ///TRANSLATION PAGE
