@@ -8,7 +8,7 @@ namespace XCVTransformer.Helpers
 {
     public class ClipboardTaker
     {
-        private bool transformerOn;//Flag para saber si está encendido o no el transformador
+        private bool transformerOn = true;//Flag para saber si está encendido o no el transformador
 
         public event EventHandler<string> ClipboardTextChanged;
         internal ClipboardLoader loader;

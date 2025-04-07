@@ -23,8 +23,8 @@ namespace XCVTransformer.ViewModels
 
         ///TRANSLATION PAGE
         private string initText = "Hola";
-        private string selectedOriginLanguage = "es";
-        private string selectedEndLanguage = "en";
+        private string selectedOriginLanguage = "Español";
+        private string selectedEndLanguage = "Inglés";
 
         //-------------------------CLASE Y METODOS-------------------------
 
@@ -117,9 +117,9 @@ namespace XCVTransformer.ViewModels
                     string newLangCode = "es";
                     if(AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
                     {
-                        selectedOriginLanguage = newLangCode;
+                        selectedOriginLanguage = value;
                         Debug.WriteLine(selectedOriginLanguage);
-                        this.clipboardTaker.GetTransformer().ChangeOriginCode(selectedOriginLanguage);
+                        this.clipboardTaker.GetTransformer().ChangeOriginCode(newLangCode);
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(SelectedOriginLanguage));
                     }
@@ -141,9 +141,9 @@ namespace XCVTransformer.ViewModels
                     string newLangCode = "en";
                     if (AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
                     {
-                        selectedEndLanguage = newLangCode;
+                        selectedEndLanguage = value;
                         Debug.WriteLine(selectedEndLanguage);
-                        this.clipboardTaker.GetTransformer().ChangeEndCode(selectedEndLanguage);
+                        this.clipboardTaker.GetTransformer().ChangeEndCode(newLangCode);
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(selectedEndLanguage));
                     }
