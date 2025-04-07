@@ -3,6 +3,11 @@ using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
 using XCVTransformer.Transformers;
 
+using Microsoft.Toolkit.Uwp.Notifications; // Necesario
+using Windows.UI.Notifications;
+using Microsoft.Windows.AppLifecycle;
+
+
 
 namespace XCVTransformer.Helpers
 {
@@ -37,6 +42,9 @@ namespace XCVTransformer.Helpers
          */
         private async void OnClipboardContentChanged(object sender, object e)
         {
+            //Prueba del toast de windows
+            showToast();
+
             if (!this.transformerOn) return;//Si está apagado el trasnformador fuera
             if (transformingFlag) return;//Si ya estamos transformando abortamos
             transformingFlag = true;
@@ -53,12 +61,22 @@ namespace XCVTransformer.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error en evento de cambio de portapapeles: {ex.Message}");
+                Debug.WriteLine($"Error en evento de cambio de portapapeles: {ex.Message}");
             }
             finally
             {
                 transformingFlag = false;
             }
+        }
+
+        private void showToast()
+        {
+            Debug.WriteLine($"Intento toassst");
+
+            new ToastContentBuilder()
+                .AddText("Notificación")
+                .AddText("ola")
+                .Show();
         }
     }
 }
