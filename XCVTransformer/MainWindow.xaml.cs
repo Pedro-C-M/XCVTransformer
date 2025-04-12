@@ -42,9 +42,24 @@ namespace XCVTransformer
             RemoveTitleBar();
             PrepareTray();
             LoadNav();
-            BackdropMaterialHelper.PrepareBackdropMaterial(this);        
+            TryBackdrop();
         }
- 
+
+        /**
+         * Si puede pone fondo del sistema de la aplicacion en acrilico, material traslucido.
+         */
+        private bool TryBackdrop()
+        {
+            if (DesktopAcrylicController.IsSupported())
+            {
+                DesktopAcrylicBackdrop DesktopAcrylicBackdrop = new DesktopAcrylicBackdrop();
+                this.SystemBackdrop = DesktopAcrylicBackdrop;
+
+                return true;
+            }
+            return false;
+        }
+
 
         /**
          * Asigna al grid root de la ventana el DataContext del view model
