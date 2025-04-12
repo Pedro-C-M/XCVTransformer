@@ -12,6 +12,9 @@ using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
 using XCVTransformer.ViewModels;
+using Microsoft.UI.Composition;
+using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Xaml.Media;
 
 namespace XCVTransformer
 {
@@ -25,7 +28,6 @@ namespace XCVTransformer
         private TrayManager trayManager;
 
         public MainViewModel ViewModel { get; }
-
         //Marca la opción del Nav seleccionada inicialmente, esto para marcar el botón como selected y ver la page
         private string startingPage = "TranslatorPage";
 
@@ -40,7 +42,9 @@ namespace XCVTransformer
             RemoveTitleBar();
             PrepareTray();
             LoadNav();
+            BackdropMaterialHelper.PrepareBackdropMaterial(this);        
         }
+ 
 
         /**
          * Asigna al grid root de la ventana el DataContext del view model

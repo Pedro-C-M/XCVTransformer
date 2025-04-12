@@ -30,7 +30,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Idioma Origen" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <ListView x:Name="OrigenList" Grid.Row="1"
+                <ListView x:Name="OrigenList" Grid.Row="1" CornerRadius="{StaticResource ControlCornerRadius}"
                           BorderThickness="1"
                           BorderBrush="{StaticResource LineDetail}"
                           HorizontalAlignment="Center"
@@ -53,7 +53,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Idioma destino" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <ListView x:Name="EndList" Grid.Row="1"
+                <ListView x:Name="EndList" Grid.Row="1" CornerRadius="{StaticResource ControlCornerRadius}"
                           BorderThickness="1"
                           BorderBrush="{StaticResource LineDetail}"
                           HorizontalAlignment="Center"

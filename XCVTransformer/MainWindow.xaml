@@ -10,7 +10,7 @@
     Title="XCVTransformer">
 
 
-    <Grid x:Name="RootGrid" CornerRadius="{StaticResource OverlayCornerRadius}">
+    <Grid x:Name="RootGrid" CornerRadius="{StaticResource OverlayCornerRadius}" Background="Transparent">
         <!--Layout completo, 2 filas: 1 para el switch, y otra para la parte de navegación-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <!-- Área con el Switch entre la barra de título y el área de navegación -->
-        <Grid Grid.Row="0" Background="LightGray" Padding="10">
+        <Grid Grid.Row="0" Padding="10" Background="Transparent">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="Activar transformador" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <ToggleSwitch IsOn="{Binding IsTransformerOn, Mode=TwoWay}" OnContent="Encendido" OffContent="Apagado" VerticalAlignment="Center"/> 
@@ -42,8 +42,8 @@
 
                                     <!-- Barra de navegación superior -->
                                     <Grid x:Name="TopNavGrid" Grid.Row="0" 
-                                  HorizontalAlignment="Stretch"
-                                  Background="{ThemeResource NavigationViewTopPaneBackground}">
+                                          HorizontalAlignment="Stretch"
+                                          Background="{ThemeResource NavigationViewTopPaneBackground}">
                                         <ContentPresenter x:Name="TopNavContentPresenter"
                                           Content="{TemplateBinding PaneCustomContent}"
                                           HorizontalAlignment="Center"/>
