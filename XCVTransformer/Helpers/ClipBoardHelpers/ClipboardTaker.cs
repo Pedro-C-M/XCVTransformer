@@ -42,11 +42,14 @@ namespace XCVTransformer.Helpers
          */
         private async void OnClipboardContentChanged(object sender, object e)
         {
-            //Prueba del toast de windows
-            showToast();
-
             if (!this.transformerOn) return;//Si está apagado el trasnformador fuera
             if (transformingFlag) return;//Si ya estamos transformando abortamos
+            //Si estamos intentando traducir al mismo idioma abortamos con una notificación al usuario
+            if (loader._transformer.SameFromTo())
+            {
+                AuxClasses.NotificationLauncher.NotifySameOriginAndEndLanguage();
+                return;
+            }
             transformingFlag = true;
             try
             {
@@ -67,16 +70,6 @@ namespace XCVTransformer.Helpers
             {
                 transformingFlag = false;
             }
-        }
-
-        private void showToast()
-        {
-            Debug.WriteLine($"Intento toassst");
-
-            new ToastContentBuilder()
-                .AddText("Notificación")
-                .AddText("ola")
-                .Show();
         }
     }
 }

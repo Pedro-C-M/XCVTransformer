@@ -38,16 +38,28 @@ namespace XCVTransformer.Transformers
                 var requestBody = new[] { new { Text = toTransform } };
                 var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
 
-                var response = await client.PostAsync(endpoint + route, content);
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    var response = await client.PostAsync(endpoint + route, content);
+                    response.EnsureSuccessStatusCode();
 
-                var result = await response.Content.ReadAsStringAsync();
+                    var result = await response.Content.ReadAsStringAsync();
 
-                var translatedText = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
+                    var translatedText = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
 
-                Debug.WriteLine("Nueva traducción de "+ toTransform);
+                    Debug.WriteLine("Nueva traducción de " + toTransform);
 
-                return translatedText;
+                    return translatedText;
+                }
+                catch(HttpRequestException ex)
+                {
+                    AuxClasses.NotificationLauncher.NotifyNoInternetError();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error desconocido en la traducción: " + ex.Message);
+                }
+                return "";
             }
         }
 
@@ -59,6 +71,14 @@ namespace XCVTransformer.Transformers
         void ITransformer.ChangeEndCode(string newCode)
         {
             this.toLanguage = newCode;
+        }
+
+        /**
+         * Para comprobar si se está intentando traducir al mismo idioma no hacerlo
+         */
+        bool ITransformer.SameFromTo()
+        {
+            return (fromLanguage.Equals(toLanguage));
         }
     }
 }

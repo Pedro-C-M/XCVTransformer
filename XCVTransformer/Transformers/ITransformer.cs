@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace XCVTransformer.Transformers
 {
@@ -8,5 +9,7 @@ namespace XCVTransformer.Transformers
         void ChangeOriginCode(string newCode);
 
         void ChangeEndCode(string newCode);
+
+        Boolean SameFromTo();
     }
 }
