@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using Microsoft.UI.Windowing;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -35,6 +37,7 @@ namespace XCVTransformer
             ViewModel = new MainViewModel(contentFrame);
             AsignDataContext();
 
+            RemoveTitleBar();
             PrepareTray();
             LoadNav();
         }
@@ -70,10 +73,25 @@ namespace XCVTransformer
             WindowLockHelper.LockWindowSize(hWnd);
         }
 
+        /**
+         * Quita la Title Bar para mejor diseño y evitar el movimiento de la ventana
+         */
+        private void RemoveTitleBar()
+        {
+            var hwnd = WindowNative.GetWindowHandle(this);
+            var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
+            AppWindow appWin = AppWindow.GetFromWindowId(windowId);
+
+            if (appWin.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.SetBorderAndTitleBar(true, false);
+            }
+        }
+
         /***
          * ---------------------------------------Handlers de eventos de la ventana-------------------------------------------------------
         */
-       
+
 
         /**
          * Carga la página que quiero en inicio en el frame sincroniza con el VM, en este caso TranslatorPage

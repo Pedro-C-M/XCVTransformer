@@ -15,22 +15,22 @@ namespace XCVTransformer.AuxClasses
          */
         public static readonly List<string> LanguageList = new List<string>
         {
+            "Español",
             "Inglés",
+            "Francés",
+            "Alemán",
+            "Japonés",
+            "Italiano",
+            "Portugués",
             "Chino simplificado",
             "Hindú",
-            "Español",
-            "Francés",
-            "Portugués",
             "Ruso",
             "Urdu",
             "Indonesio",
-            "Suajili",
-            "Alemán",
-            "Japonés",
-            "Italiano"
+            "Suajili"
         };
         /**
-         *Para la correspondencia de el código de cada idioma
+         *Para la correspondencia de el código de cada idioma para la API
          */
         public static readonly Dictionary<string, string> LanguageCodes = new Dictionary<string, string>
         {

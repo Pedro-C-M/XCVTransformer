@@ -10,7 +10,7 @@
     Title="XCVTransformer">
 
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" CornerRadius="{StaticResource OverlayCornerRadius}">
         <!--Layout completo, 2 filas: 1 para el switch, y otra para la parte de navegación-->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
