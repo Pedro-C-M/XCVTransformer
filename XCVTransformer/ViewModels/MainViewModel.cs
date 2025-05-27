@@ -169,7 +169,7 @@ namespace XCVTransformer.ViewModels
             {
                 "TranslatorPage" => typeof(TranslatorPage),
                 "CodificationPage" => typeof(CodificationPage),
-                "OptionsPage" => typeof(OptionsPage),
+                "OtrosPage" => typeof(OtrosPage),
                 _ => null
             };
 

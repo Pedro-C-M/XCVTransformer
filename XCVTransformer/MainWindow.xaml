@@ -21,7 +21,7 @@
         <!-- Área con el Switch entre la barra de título y el área de navegación -->
         <Grid Grid.Row="0"  CornerRadius="{ThemeResource OverlayCornerRadius}">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Activar transformador" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Text="XCVTransformer" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <ToggleSwitch IsOn="{Binding IsTransformerOn, Mode=TwoWay}" OnContent="Encendido" OffContent="Apagado" VerticalAlignment="Center"/> 
             </StackPanel>
         </Grid>
@@ -75,7 +75,7 @@
 
                     <NavigationViewItem x:Name="TranslatorPage" Content="Traducir" Tag="TranslatorPage" Grid.Column="1" Tapped="NavItemTapped"/>
                     <NavigationViewItem x:Name="CodificationPage" Content="Codificar" Tag="CodificationPage" Grid.Column="2" Tapped="NavItemTapped"/>
-                    <NavigationViewItem x:Name="OptionsPage" Content="Opciones" Tag="OptionsPage" Grid.Column="3" Tapped="NavItemTapped"/>
+                    <NavigationViewItem x:Name="OtrosPage" Content="Otros" Tag="OtrosPage" Grid.Column="3" Tapped="NavItemTapped"/>
                 </Grid>
             </NavigationView.PaneCustomContent>
 

@@ -19,6 +19,7 @@ namespace XCVTransformer.Helpers
         internal ClipboardLoader loader;
 
         private bool transformingFlag = false; //Flag para controlar bloqueos del método y no causar bucles
+        private bool firstTryWhileOffFlag = true; //Flag para indicar si es la primera vez que copiamos despues de detectar apagado el transformer, para lanzar un aviso
         public ClipboardTaker()
         {
             loader = new ClipboardLoader();
@@ -42,7 +43,17 @@ namespace XCVTransformer.Helpers
          */
         private async void OnClipboardContentChanged(object sender, object e)
         {
-            if (!this.transformerOn) return;//Si está apagado el trasnformador fuera
+            if (!this.transformerOn)//Si está apagado el trasnformador fuera, si es la primera vez que se intenta lanzar un aviso quizas.
+            {
+                if (firstTryWhileOffFlag)
+                {
+                    this.firstTryWhileOffFlag = false;
+                    AuxClasses.NotificationLauncher.NotifyTransformerIsOff();
+                    return;
+                }
+                return;
+            }
+            this.firstTryWhileOffFlag = true; //Reiniciamos el flag para la proxima vez que se apague el transformador
             if (transformingFlag) return;//Si ya estamos transformando abortamos
             //Si estamos intentando traducir al mismo idioma abortamos con una notificación al usuario
             if (loader._transformer.SameFromTo())

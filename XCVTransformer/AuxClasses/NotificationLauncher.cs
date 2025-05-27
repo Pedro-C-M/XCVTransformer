@@ -23,5 +23,13 @@ namespace XCVTransformer.AuxClasses
                 .Show();
         }
 
+        internal static void NotifyTransformerIsOff()
+        {
+            new ToastContentBuilder()
+                .AddText("XCVTransformer está desactivado")
+                .AddText("Tiene XCVTransformer desactivado por lo que no se transformará nada")
+                .Show();
+        }
+
     }
 }

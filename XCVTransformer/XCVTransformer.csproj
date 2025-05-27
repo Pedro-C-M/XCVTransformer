@@ -30,6 +30,9 @@
 	<None Update="Assets/AppLogo/Developing-logo.ico">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
+	<Page Update="Pages\OtrosPage.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	</Page>
 	<Page Update="Pages\CodificationPage.xaml">
 	  <Generator>MSBuild:Compile</Generator>
 	</Page>
