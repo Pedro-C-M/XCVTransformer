@@ -30,6 +30,15 @@ namespace XCVTransformer.AuxClasses
                 .AddText("Tiene XCVTransformer desactivado por lo que no se transformará nada")
                 .Show();
         }
-
+        /**
+         * Errores en deteccion de idioma
+         */
+        internal static void NotifyDetectorError(string errorText)
+        {
+            new ToastContentBuilder()
+                .AddText("Error detectando idioma")
+                .AddText("Texto del error: \n"+ errorText)
+                .Show();
+        }
     }
 }

@@ -15,11 +15,11 @@
             <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" Padding="0" Margin="0,0,0,20">
                 <TextBlock Grid.Column="0" Text="Detector de idiomas" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0"/>
                 <Grid Grid.Column="1" RowDefinitions="Auto,Auto" Margin="60,0,0,0">
-                    <ToggleSwitch Grid.Row="0" IsOn="{Binding IsTransformerOn, Mode=TwoWay}"/>
+                    <ToggleSwitch Grid.Row="0" IsOn="{Binding IsDetectorOn, Mode=TwoWay}"/>
                     <TextBlock Grid.Row="1" Text="Activar detector" FontSize="12"/>
                 </Grid>
             </Grid>
-            <TextBox Grid.Row="1" x:Name="DetectedLanguageTextBox" Width="200" IsEnabled="False" IsReadOnly="True" VerticalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBox Grid.Row="1" x:Name="DetectedLanguageTextBox" Text="{Binding DetectedLanguageText}" Width="200" IsEnabled="False" IsReadOnly="True" VerticalAlignment="Center" Margin="0,0,0,10"/>
             <TextBlock Grid.Row="2" Text="Copia o corta texto para detectar su idioma" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
         <Border Grid.Row="2" Height="1" Background="AntiqueWhite" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>

@@ -26,6 +26,11 @@ namespace XCVTransformer.ViewModels
         private string selectedOriginLanguage = "Español";
         private string selectedEndLanguage = "Inglés";
 
+        ///OTROS PAGE
+        private bool isDetectorOn = false;
+        private string detectedLanguageText = "";
+
+
         //-------------------------CLASE Y METODOS-------------------------
 
         private readonly Frame _contentFrame;
@@ -33,6 +38,10 @@ namespace XCVTransformer.ViewModels
         public MainViewModel(Frame contentFrame)
         {
             this.clipboardTaker = new ClipboardTaker();
+            this.clipboardTaker.loader.OnDetectionCompleted += (detectedLanguage) =>
+            {
+                DetectedLanguageText = detectedLanguage;
+            };
             this._contentFrame = contentFrame;
 
             NavigateCommand = new RelayCommand<string>(Navigate);
@@ -118,7 +127,7 @@ namespace XCVTransformer.ViewModels
                     if(AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
                     {
                         selectedOriginLanguage = value;
-                        Debug.WriteLine(selectedOriginLanguage);
+                        //Debug.WriteLine(selectedOriginLanguage);
                         this.clipboardTaker.GetTransformer().ChangeOriginCode(newLangCode);
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(SelectedOriginLanguage));
@@ -142,7 +151,7 @@ namespace XCVTransformer.ViewModels
                     if (AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
                     {
                         selectedEndLanguage = value;
-                        Debug.WriteLine(selectedEndLanguage);
+                        //Debug.WriteLine(selectedEndLanguage);
                         this.clipboardTaker.GetTransformer().ChangeEndCode(newLangCode);
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(selectedEndLanguage));
@@ -154,7 +163,33 @@ namespace XCVTransformer.ViewModels
                 }
             }
         }
+        //-------------------------OTROS PAGE-------------------------
+        public bool IsDetectorOn
+        {
+            get => isDetectorOn;
+            set
+            {
+                if (isDetectorOn != value)
+                {
+                    isDetectorOn = value;
+                    OnPropertyChanged(nameof(isDetectorOn));
+                    this.clipboardTaker.loader.ChangeToDetectorMode(isDetectorOn);
+                }
+            }
+        }
 
+        public string DetectedLanguageText
+        {
+            get => detectedLanguageText;
+            set
+            {
+                if (detectedLanguageText != value)
+                {
+                    detectedLanguageText = value;
+                    OnPropertyChanged(nameof(DetectedLanguageText));
+                }
+            }
+        }
 
         //-------------------------NAVEGACIÓN-------------------------
 

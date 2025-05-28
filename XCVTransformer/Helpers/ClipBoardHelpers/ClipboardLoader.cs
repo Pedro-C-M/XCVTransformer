@@ -2,12 +2,19 @@
 using Windows.ApplicationModel.DataTransfer;
 using System.Diagnostics;
 using XCVTransformer.Transformers;
+using System;
 
 namespace XCVTransformer.Helpers
 {
     class ClipboardLoader
     {
         internal ITransformer _transformer = new Traductor();
+
+        //Para el detector
+        private ITransformer lastTransformer;
+        private bool isDetectorOn;
+        public event Action<string> OnDetectionCompleted;
+
 
         private string lastTransformedText = "";
         /**
@@ -22,17 +29,36 @@ namespace XCVTransformer.Helpers
             }
             string transformedText = await TransformText(text);
 
-            DataPackage dataPackage = new DataPackage();
-            dataPackage.SetText(transformedText); 
+            if (isDetectorOn)
+            {
+                OnDetectionCompleted?.Invoke(transformedText);
+            }
+            else { 
+                DataPackage dataPackage = new DataPackage();
+                dataPackage.SetText(transformedText); 
 
-            Clipboard.SetContent(dataPackage);
-            lastTransformedText = transformedText;
-            
+                Clipboard.SetContent(dataPackage);
+                lastTransformedText = transformedText;
+            }
         }
 
         internal void ReestartLastTransformedWord()
         {
             lastTransformedText = "";
+        }
+
+        public void ChangeToDetectorMode(bool detectorMode)
+        {
+            this.isDetectorOn = detectorMode;
+            if (detectorMode)
+            {
+                this.lastTransformer = _transformer;//Guardamos para reiniciar el transformer después
+                _transformer = new LanguageDetector();
+            }
+            else
+            {
+                this._transformer = lastTransformer;//Renovamos el transformer que había
+            }
         }
 
         /**

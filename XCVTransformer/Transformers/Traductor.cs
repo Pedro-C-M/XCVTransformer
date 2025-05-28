@@ -15,6 +15,7 @@ namespace XCVTransformer.Transformers
 
         private string apiKey = Environment.GetEnvironmentVariable("MY_TRANSLATOR_API_KEY");
         private static readonly string endpoint = "https://api.cognitive.microsofttranslator.com/";
+        private static readonly string apiVersion = "3.0";
 
         /**
          * Método que llama a la API de mi recurso traductor de Azure, depende de los atributos to y from los idiomas a destino y origen.
@@ -28,7 +29,7 @@ namespace XCVTransformer.Transformers
          */
         public async Task<string> Transform(string toTransform)
         {
-            var route = $"/translate?api-version=3.0&from={fromLanguage}&to={toLanguage}";
+            var route = $"/translate?api-version={apiVersion}&from={fromLanguage}&to={toLanguage}";
 
             using (var client = new HttpClient())
             {
@@ -45,13 +46,13 @@ namespace XCVTransformer.Transformers
 
                     var result = await response.Content.ReadAsStringAsync();
 
-                    var translatedText = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
+                    var translatedText = JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
 
                     Debug.WriteLine("Nueva traducción de " + toTransform);
 
                     return translatedText;
                 }
-                catch(HttpRequestException ex)
+                catch(HttpRequestException)
                 {
                     AuxClasses.NotificationLauncher.NotifyNoInternetError();
                 }
