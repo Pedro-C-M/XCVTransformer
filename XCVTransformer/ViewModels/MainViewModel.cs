@@ -131,6 +131,8 @@ namespace XCVTransformer.ViewModels
                         this.clipboardTaker.GetTransformer().ChangeOriginCode(newLangCode);
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(SelectedOriginLanguage));
+                        desactivarCodifVisuals();
+                        desactivarLanguageDetectorSwitch();
                     }
                     else
                     {
@@ -155,6 +157,8 @@ namespace XCVTransformer.ViewModels
                         this.clipboardTaker.GetTransformer().ChangeEndCode(newLangCode);
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(selectedEndLanguage));
+                        desactivarCodifVisuals();
+                        desactivarLanguageDetectorSwitch();
                     }
                     else
                     {
@@ -174,9 +178,19 @@ namespace XCVTransformer.ViewModels
                     isDetectorOn = value;
                     OnPropertyChanged(nameof(isDetectorOn));
                     this.clipboardTaker.loader.ChangeToDetectorMode(isDetectorOn);
+                    if (value)
+                    {               
+                        this.desactivarTraductorVisuals();
+                    }
+                    else
+                    {
+                        this.DetectedLanguageText = "";
+                    }
                 }
             }
         }
+
+        
 
         public string DetectedLanguageText
         {
@@ -189,6 +203,24 @@ namespace XCVTransformer.ViewModels
                     OnPropertyChanged(nameof(DetectedLanguageText));
                 }
             }
+        }
+        //-------------------------CAMBIAR VISUALES-------------------------
+        private void desactivarTraductorVisuals()
+        {
+            this.selectedOriginLanguage = "";
+            this.selectedEndLanguage = "";
+        }
+        
+        private void desactivarCodifVisuals()
+        {
+            //TO-DO
+        }
+
+        private void desactivarLanguageDetectorSwitch()
+        {
+            this.isDetectorOn = false;
+            this.clipboardTaker.loader.ChangeToDetectorMode(false);
+            this.detectedLanguageText = "";
         }
 
         //-------------------------NAVEGACIÓN-------------------------

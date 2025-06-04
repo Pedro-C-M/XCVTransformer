@@ -29,6 +29,7 @@ namespace XCVTransformer.Transformers
          */
         public async Task<string> Transform(string toTransform)
         {
+            Debug.WriteLine("uwww");
             var route = $"/translate?api-version={apiVersion}&from={fromLanguage}&to={toLanguage}";
 
             using (var client = new HttpClient())

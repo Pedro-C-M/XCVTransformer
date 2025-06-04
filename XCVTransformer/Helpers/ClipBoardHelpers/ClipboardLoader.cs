@@ -23,17 +23,18 @@ namespace XCVTransformer.Helpers
          * És síncrono SetContent()
          */
         public async Task LoadTextToClipboard(string text)
-        {   ///Para evitar bucles repitiendo lo mismo por problemas de asincronidad
-            if (text == lastTransformedText){
+        {
+            ///Para evitar bucles repitiendo lo mismo por problemas de asincronidad
+            if (!isDetectorOn && text == lastTransformedText)
+            {
                 return;
             }
             string transformedText = await TransformText(text);
-
             if (isDetectorOn)
             {
                 OnDetectionCompleted?.Invoke(transformedText);
             }
-            else { 
+            else {
                 DataPackage dataPackage = new DataPackage();
                 dataPackage.SetText(transformedText); 
 

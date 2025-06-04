@@ -19,7 +19,7 @@
                     <TextBlock Grid.Row="1" Text="Activar detector" FontSize="12"/>
                 </Grid>
             </Grid>
-            <TextBox Grid.Row="1" x:Name="DetectedLanguageTextBox" Text="{Binding DetectedLanguageText}" Width="200" IsEnabled="False" IsReadOnly="True" VerticalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBox Grid.Row="1" x:Name="DetectedLanguageTextBox" Text="{Binding DetectedLanguageText, Mode=TwoWay}" Width="200" IsEnabled="False" IsReadOnly="True" VerticalAlignment="Center" Margin="0,0,0,10"/>
             <TextBlock Grid.Row="2" Text="Copia o corta texto para detectar su idioma" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
         <Border Grid.Row="2" Height="1" Background="AntiqueWhite" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
