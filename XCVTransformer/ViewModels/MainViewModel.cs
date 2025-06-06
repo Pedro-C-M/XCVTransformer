@@ -227,7 +227,8 @@ namespace XCVTransformer.ViewModels
                     try
                     {
                         this.clipboardTaker.loader._transformer = CodificatorFactory.Create(value);
-                        Debug.WriteLine("Codificador creado para: " + value);
+                        this.clipboardTaker.loader.ReestartLastTransformedWord();
+                        //Debug.WriteLine("Codificador creado para: " + value);
                     }
                     catch (Exception ex)
                     {
