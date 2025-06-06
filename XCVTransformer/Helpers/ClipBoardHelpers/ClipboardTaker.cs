@@ -55,12 +55,17 @@ namespace XCVTransformer.Helpers
             }
             this.firstTryWhileOffFlag = true; //Reiniciamos el flag para la proxima vez que se apague el transformador
             if (transformingFlag) return;//Si ya estamos transformando abortamos
+
             //Si estamos intentando traducir al mismo idioma abortamos con una notificación al usuario
-            if (loader._transformer.SameFromTo())
+            if (this.loader._transformer is ITraductor traductor)
             {
-                AuxClasses.NotificationLauncher.NotifySameOriginAndEndLanguage();
-                return;
+                if (traductor.SameFromTo())
+                {
+                    AuxClasses.NotificationLauncher.NotifySameOriginAndEndLanguage();
+                    return;
+                }
             }
+
             transformingFlag = true;
             try
             {

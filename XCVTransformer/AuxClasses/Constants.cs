@@ -48,5 +48,20 @@ namespace XCVTransformer.AuxClasses
             { "Japonés", "ja" },
             { "Italiano", "it" }
         };
+        /**
+         *Las formas de codificar disponibles en lista
+         */
+        public static readonly List<string> CodificationList = new List<string>
+        {
+            "Base64",
+            "Base52",
+            "Base45",
+            "Base92"
+        };
+
+        //Para el tema de los codificadores y configurar si estan en modo to o from poder usar constantes en el método y quedar más claro
+        public static readonly Boolean CodificatingToMode = true;
+        public static readonly Boolean CodificatingFromMode = false;
+
     }
 }

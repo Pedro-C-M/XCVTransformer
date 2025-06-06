@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace XCVTransformer.Transformers
 {
-    class Traductor : ITransformer
+    class Traductor : ITransformer, ITraductor
     {
         private string fromLanguage = "es";
         private string toLanguage = "en";
@@ -65,12 +65,12 @@ namespace XCVTransformer.Transformers
             }
         }
 
-        void ITransformer.ChangeOriginCode(string newCode)
+        void ITraductor.ChangeOriginCode(string newCode)
         {
             this.fromLanguage = newCode;
         }
 
-        void ITransformer.ChangeEndCode(string newCode)
+        void ITraductor.ChangeEndCode(string newCode)
         {
             this.toLanguage = newCode;
         }
@@ -78,7 +78,7 @@ namespace XCVTransformer.Transformers
         /**
          * Para comprobar si se está intentando traducir al mismo idioma no hacerlo
          */
-        bool ITransformer.SameFromTo()
+        bool ITraductor.SameFromTo()
         {
             return (fromLanguage.Equals(toLanguage));
         }

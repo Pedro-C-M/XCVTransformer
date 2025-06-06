@@ -11,14 +11,80 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Otros diccionarios combinados aquí -->
             </ResourceDictionary.MergedDictionaries>
-            <!-- ________________________________________ PROPIEDADES/CONSTANTES ___________________________ -->
-            
+            <!-- ________________________________________ PROPIEDADES/CONSTANTES VISUALES ___________________________ -->
+
             <!-- >>>>>>>>>>>>>>>>>>>>>>>>COLORES<<<<<<<<<<<<<<<<<<<<<<<<< -->
             <Color x:Key="LineDetail">#5df77c</Color>
-            
+
             <!-- >>>>>>>>>>>>>>>>>>>>>>>>FONT STYLE<<<<<<<<<<<<<<<<<<<<<< -->
             <FontFamily x:Key="DefaultFontFamily">Segoe UI</FontFamily>
             
+            <!-- >>>>>>>>>>>>>>>>>>>>>>>>BUTTON GROUP STYLE<<<<<<<<<<<<<<<<<<<<<<<<< -->
+            <Style x:Key="ButtonRadioStyle" TargetType="RadioButton">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Grid>
+                                <Border x:Name="RootBorder"
+                                    Background="#444444"  
+                                    BorderBrush="#333333"
+                                    BorderThickness="1"
+                                    CornerRadius="4">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Content}"
+                                          x:Name="contentPresenter"/>
+                                </Border>
+
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                    </VisualStateGroup>
+
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Unchecked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#444444"/>
+                                                    <!-- gris oscuro fondo unchecked -->
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#333333"/>
+                                                    <!-- borde gris unchecked -->
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                                    <!-- letra blanca unchecked -->
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#8a6bc1"/>
+                                                    <!-- púrpura suave fondo checked -->
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootBorder" Storyboard.TargetProperty="BorderBrush">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#6b4b8a"/>
+                                                    <!-- borde púrpura -->
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Black"/>
+                                                    <!-- letra negra checked -->
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

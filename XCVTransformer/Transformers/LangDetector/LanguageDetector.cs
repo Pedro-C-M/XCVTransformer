@@ -121,21 +121,5 @@ namespace XCVTransformer.Transformers
             var reversed = LanguageCodes.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
             return reversed.TryGetValue(code, out string name) ? name : code;
         }
-
-        public void ChangeEndCode(string newCode)
-        {
-            //No necesita este método de la interfaz
-        }
-
-        public void ChangeOriginCode(string newCode)
-        {
-            //No necesita este método de la interfaz
-        }
-
-        public bool SameFromTo()
-        {
-            //No necesita este método de la interfaz
-            return false;
-        }
     }
 }

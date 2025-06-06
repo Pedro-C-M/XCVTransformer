@@ -6,10 +6,12 @@
     xmlns:local="using:XCVTransformer.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <Grid RowDefinitions="10,Auto,10,Auto" Padding="20">
+    <Grid Padding="16"
+         Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
+        CornerRadius="{ThemeResource OverlayCornerRadius}" 
+         RowDefinitions="10,Auto,10,Auto">
         <Border Grid.Row="0" Height="1" Background="AntiqueWhite" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
         <Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto" Padding="20">
             <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" Padding="0" Margin="0,0,0,20">

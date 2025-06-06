@@ -5,9 +5,12 @@ using System.Diagnostics;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using XCVTransformer.AuxClasses;
 using XCVTransformer.Helpers;
 using XCVTransformer.Pages;
+using XCVTransformer.Transformers;
+using XCVTransformer.Transformers.Codificators;
 
 
 namespace XCVTransformer.ViewModels
@@ -25,6 +28,10 @@ namespace XCVTransformer.ViewModels
         private string initText = "Hola";
         private string selectedOriginLanguage = "Español";
         private string selectedEndLanguage = "Inglés";
+        ///CODIFICATIONS PAGE
+        private string selectedCodification = "";
+
+
 
         ///OTROS PAGE
         private bool isDetectorOn = false;
@@ -123,16 +130,23 @@ namespace XCVTransformer.ViewModels
             {
                 if (selectedOriginLanguage != value)
                 {
+                    CheckNoTraductor();
                     string newLangCode = "es";
                     if(AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
                     {
                         selectedOriginLanguage = value;
                         //Debug.WriteLine(selectedOriginLanguage);
-                        this.clipboardTaker.GetTransformer().ChangeOriginCode(newLangCode);
+
+                        //Se comprueba que sea traductor y se cambia
+                        if (this.clipboardTaker.GetTransformer() is ITraductor traductor)
+                        {
+                            traductor.ChangeOriginCode(newLangCode);
+                        }
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(SelectedOriginLanguage));
                         desactivarCodifVisuals();
                         desactivarLanguageDetectorSwitch();
+                        desactivarCodifVisuals();
                     }
                     else
                     {
@@ -149,16 +163,24 @@ namespace XCVTransformer.ViewModels
             {
                 if (selectedEndLanguage != value)
                 {
+                    CheckNoTraductor();
                     string newLangCode = "en";
                     if (AppConstants.LanguageCodes.TryGetValue(value, out newLangCode))
                     {
                         selectedEndLanguage = value;
                         //Debug.WriteLine(selectedEndLanguage);
-                        this.clipboardTaker.GetTransformer().ChangeEndCode(newLangCode);
+
+                        //Se comprueba que sea traductor y se cambia
+                        if (this.clipboardTaker.GetTransformer() is ITraductor traductor)
+                        {
+                            traductor.ChangeEndCode(newLangCode);
+                        }
+
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
                         OnPropertyChanged(nameof(selectedEndLanguage));
                         desactivarCodifVisuals();
                         desactivarLanguageDetectorSwitch();
+                        desactivarCodifVisuals();
                     }
                     else
                     {
@@ -167,6 +189,56 @@ namespace XCVTransformer.ViewModels
                 }
             }
         }
+
+        /**
+         * Si venimos de no tener traductor es necesario poner uno antes de configurarlo
+         * 
+         */
+        private void CheckNoTraductor()
+        {
+            if (this.clipboardTaker.GetTransformer() is not ITraductor)
+            {
+                this.clipboardTaker.loader._transformer = new Traductor();
+            }
+        }
+        //--------------------------CODIFICATION PAGE-----------------------
+        private List<string> codifications = AppConstants.CodificationList;
+        public List<string> Codifications
+        {
+            get => codifications;
+            set
+            {
+                if (codifications != value)
+                {
+                    codifications = value;
+                    OnPropertyChanged(nameof(Codifications));
+                }
+            }
+        }
+        public string SelectedCodification
+        {
+            get => selectedCodification;
+            set
+            {
+                if (selectedCodification != value)
+                {
+                    selectedCodification = value;
+                    OnPropertyChanged(nameof(SelectedCodification));
+                    try
+                    {
+                        this.clipboardTaker.loader._transformer = CodificatorFactory.Create(value);
+                        Debug.WriteLine("Codificador creado para: " + value);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error creando codificador: " + ex.Message);
+                    }
+                    desactivarLanguageDetectorSwitch();
+                    desactivarTraductorVisuals();
+                }
+            }
+        }
+
         //-------------------------OTROS PAGE-------------------------
         public bool IsDetectorOn
         {
@@ -181,6 +253,7 @@ namespace XCVTransformer.ViewModels
                     if (value)
                     {               
                         this.desactivarTraductorVisuals();
+                        this.desactivarCodifVisuals();
                     }
                     else
                     {
@@ -213,14 +286,16 @@ namespace XCVTransformer.ViewModels
         
         private void desactivarCodifVisuals()
         {
-            //TO-DO
+            this.selectedCodification = "";
         }
 
         private void desactivarLanguageDetectorSwitch()
         {
-            this.isDetectorOn = false;
-            this.clipboardTaker.loader.ChangeToDetectorMode(false);
-            this.detectedLanguageText = "";
+            if (this.isDetectorOn){
+                this.isDetectorOn = false;
+                this.clipboardTaker.loader.ChangeToDetectorMode(false);
+                this.detectedLanguageText = "";
+            }
         }
 
         //-------------------------NAVEGACIÓN-------------------------

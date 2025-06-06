@@ -17,6 +17,7 @@ namespace XCVTransformer.Helpers
 
 
         private string lastTransformedText = "";
+
         /**
          * Este método se encarga de cargar una cadena al portapapeles
          * 
@@ -25,7 +26,7 @@ namespace XCVTransformer.Helpers
         public async Task LoadTextToClipboard(string text)
         {
             ///Para evitar bucles repitiendo lo mismo por problemas de asincronidad
-            if (!isDetectorOn && text == lastTransformedText)
+            if (_transformer is not LanguageDetector && text == lastTransformedText)
             {
                 return;
             }
