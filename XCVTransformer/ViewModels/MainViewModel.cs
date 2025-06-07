@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Text;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
@@ -30,7 +31,8 @@ namespace XCVTransformer.ViewModels
         private string selectedEndLanguage = "Inglés";
         ///CODIFICATIONS PAGE
         private string selectedCodification = "";
-
+        private bool codificating = true;
+        private bool decodificating = false;
 
 
         ///OTROS PAGE
@@ -236,6 +238,44 @@ namespace XCVTransformer.ViewModels
                     }
                     desactivarLanguageDetectorSwitch();
                     desactivarTraductorVisuals();
+                }
+            }
+        }
+
+        public bool Codificating
+        {
+            get => codificating;
+            set
+            {
+                if (codificating != value)
+                {
+                    codificating = value;
+                    OnPropertyChanged(nameof(Codificating));
+
+                    if (value)
+                    {
+                        decodificating = false;
+                        OnPropertyChanged(nameof(Decodificating));
+                    }
+                }
+            }
+        }
+
+        public bool Decodificating
+        {
+            get => decodificating;
+            set
+            {
+                if (decodificating != value)
+                {
+                    decodificating = value;
+                    OnPropertyChanged(nameof(Decodificating));
+
+                    if (value)
+                    {
+                        codificating = false;
+                        OnPropertyChanged(nameof(Codificating));
+                    }
                 }
             }
         }

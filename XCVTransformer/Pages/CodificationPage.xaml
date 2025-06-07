@@ -13,8 +13,22 @@
           CornerRadius="{ThemeResource OverlayCornerRadius}">
 
         <StackPanel>
-
             <TextBlock Text="Codificaciones" FontSize="20" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+            <Grid Padding="16" ColumnDefinitions="*,*">
+                <RadioButton Content="Codificar a"
+                     IsChecked="{Binding Codificating, Mode=TwoWay}"
+                     GroupName="CodificationGroup"
+                     HorizontalAlignment="Center"
+                     Grid.Column="0"
+                     Margin="10,0,10,0" />
+
+                <RadioButton Content="Decodificar desde"
+                     IsChecked="{Binding Decodificating, Mode=TwoWay}"
+                     GroupName="CodificationGroup"
+                     HorizontalAlignment="Center"
+                     Grid.Column="1"
+                     Margin="10,0,10,0" />
+            </Grid>
 
             <ListView x:Name="CodificationList" Grid.Row="1" 
                   CornerRadius="{StaticResource ControlCornerRadius}"
