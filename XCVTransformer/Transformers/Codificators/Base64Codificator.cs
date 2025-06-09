@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XCVTransformer.AuxClasses;
 
 namespace XCVTransformer.Transformers.Codificators
 {
@@ -22,16 +23,28 @@ namespace XCVTransformer.Transformers.Codificators
          */
         public Task<string> Transform(string toTransform)
         {
-            if (codificatorMode)
-            {//Modo To
-                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(toTransform);
-                return Task.FromResult(Convert.ToBase64String(bytes));
-            }
+            try { 
+             if (codificatorMode)
+                {//Modo To
+                    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(toTransform);
+                    return Task.FromResult(Convert.ToBase64String(bytes));
+                }
             else
-            {//Modo From
-                byte[] bytes = Convert.FromBase64String(toTransform);
-                return Task.FromResult(System.Text.Encoding.UTF8.GetString(bytes));
+                {//Modo From
+                    byte[] bytes = Convert.FromBase64String(toTransform);
+                    return Task.FromResult(System.Text.Encoding.UTF8.GetString(bytes));
+                }
             }
+            catch(FormatException ex)
+            {
+                NotificationLauncher.NotifyBadFormatForCodification("Base64");
+            }
+            catch(Exception e)
+            {
+                throw new ArgumentException("Error en el codificador", e);
+
+            }
+            return Task.FromResult("Error de codificación");
         }
     }
 }

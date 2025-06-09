@@ -40,5 +40,15 @@ namespace XCVTransformer.AuxClasses
                 .AddText("Texto del error: \n"+ errorText)
                 .Show();
         }
+
+        /**
+         * Errores de formato en codificación
+         */
+        internal static void NotifyBadFormatForCodification(string codName)
+        {
+            new ToastContentBuilder()
+                .AddText("No tiene formato correcto para poder transformar "+ codName)
+                .Show();
+        }
     }
 }
