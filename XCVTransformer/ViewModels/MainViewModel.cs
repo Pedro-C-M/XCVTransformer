@@ -254,11 +254,7 @@ namespace XCVTransformer.ViewModels
 
                     if (value)//Si estamos activando
                     {
-                        if (this.clipboardTaker.GetTransformer() is ICodificator codificator)
-                        {
-                            codificator.ChangeCodificatorMode(AppConstants.CodificatingToMode);
-                            this.clipboardTaker.loader.ReestartLastTransformedWord();
-                        }
+                        ChangeCodificatorMode(AppConstants.CodificatingToMode);
                         decodificating = false;
                         OnPropertyChanged(nameof(Decodificating));
                     }
@@ -278,15 +274,20 @@ namespace XCVTransformer.ViewModels
 
                     if (value)//Si estamos activando
                     {
-                        if (this.clipboardTaker.GetTransformer() is ICodificator codificator)
-                        {
-                            codificator.ChangeCodificatorMode(AppConstants.CodificatingFromMode);
-                            this.clipboardTaker.loader.ReestartLastTransformedWord();
-                        }
+                        ChangeCodificatorMode(AppConstants.CodificatingFromMode);
                         codificating = false;
                         OnPropertyChanged(nameof(Codificating));
                     }
                 }
+            }
+        }
+
+        private void ChangeCodificatorMode(bool newMode)
+        {
+            if (this.clipboardTaker.GetTransformer() is ICodificator codificator)
+            {
+                codificator.ChangeCodificatorMode(newMode);
+                this.clipboardTaker.loader.ReestartLastTransformedWord();
             }
         }
 
