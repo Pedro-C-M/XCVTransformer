@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
+using XCVTransformer.AuxClasses;
 using XCVTransformer.Transformers;
-
-using Microsoft.Toolkit.Uwp.Notifications; // Necesario
-using Windows.UI.Notifications;
-using Microsoft.Windows.AppLifecycle;
 
 
 
@@ -20,6 +17,8 @@ namespace XCVTransformer.Helpers
 
         private bool transformingFlag = false; //Flag para controlar bloqueos del método y no causar bucles
         private bool firstTryWhileOffFlag = true; //Flag para indicar si es la primera vez que copiamos despues de detectar apagado el transformer, para lanzar un aviso
+
+        private bool transformingMode = AppConstants.AutomaticTransform ;//Flag para modo de transformación, automático o con atajo especial
         public ClipboardTaker()
         {
             loader = new ClipboardLoader();
@@ -34,6 +33,11 @@ namespace XCVTransformer.Helpers
         internal void ChangeTransformerState(bool newState)
         {
             this.transformerOn = newState;
+        }
+
+        internal void ChangeTransformingMode(bool newMode)
+        {
+            this.transformingMode = newMode;
         }
 
         /**
@@ -65,27 +69,34 @@ namespace XCVTransformer.Helpers
                     return;
                 }
             }
-
-            transformingFlag = true;
-            try
-            {
-                var package = Clipboard.GetContent();
-                if (package.Contains(StandardDataFormats.Text))
+            if (transformingMode == AppConstants.AutomaticTransform)
+            {//Automatico
+                transformingFlag = true;
+                try
                 {
-                    string text = await package.GetTextAsync();
-                    await loader.LoadTextToClipboard(text);
-                    //await ClipboardLoader.MockTransformTime(1000);
-                    ClipboardTextChanged?.Invoke(this, text);
+                    var package = Clipboard.GetContent();
+                    if (package.Contains(StandardDataFormats.Text))
+                    {
+                        string text = await package.GetTextAsync();
+                        await loader.LoadTextToClipboard(text);
+                        //await ClipboardLoader.MockTransformTime(1000);
+                        ClipboardTextChanged?.Invoke(this, text);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error en evento de cambio de portapapeles: {ex.Message}");
+                }
+                finally
+                {
+                    transformingFlag = false;
                 }
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error en evento de cambio de portapapeles: {ex.Message}");
+            else
+            {//Atajo manual
+
             }
-            finally
-            {
-                transformingFlag = false;
-            }
+
         }
     }
 }
