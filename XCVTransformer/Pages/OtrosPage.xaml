@@ -6,12 +6,7 @@
     xmlns:local="using:XCVTransformer.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:conv="using:XCVTransformer.AuxClasses"
     mc:Ignorable="d">
-
-    <Page.Resources>
-        <conv:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
-    </Page.Resources>
 
     <Grid Padding="16"
          Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
@@ -30,27 +25,8 @@
             <TextBlock Grid.Row="2" Text="Copia o corta texto para detectar su idioma" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
         <Border Grid.Row="2" Height="1" Background="AntiqueWhite" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-        <Grid Grid.Row="3" RowDefinitions="Auto,Auto" Padding="0,20,0,20">
-            <TextBlock Grid.Row="0" Text="Modo de transformación" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"/>
-            <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto" Padding="0,20,0,20" HorizontalAlignment="Center">
-                <RadioButton Content="Modo automático"
-                     FontSize="14"
-                     IsChecked="{Binding TransformingMode, Mode=TwoWay}"
-                     GroupName="TransformingModeGroup"
-                     HorizontalAlignment="Center"
-                     Grid.Column="0"
-                     Margin="0,0,5,0" 
-                     ToolTipService.ToolTip="Modo automático: Transforma automáticamente con los comandos normales [CTRL+C, CTRL+X y CTLR+V]"/>
-
-                <RadioButton Content="Modo atajos especiales"
-                     FontSize="14"
-                     IsChecked="{Binding TransformingMode, Converter={StaticResource BooleanNegationConverter}, Mode=TwoWay}"
-                     GroupName="TransformingModeGroup"
-                     HorizontalAlignment="Center"
-                     Grid.Column="1"
-                     Margin="5,0,0,0" 
-                     ToolTipService.ToolTip="Modo atajos especiales: Transforma cuando se utilizan los comandos normales + SHIFT"/>
-            </Grid>
+        <Grid Grid.Row="3" RowDefinitions="Auto,Auto" Padding="20">
+            <TextBlock Grid.Row="0" Text="Otro grid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
         </Grid>
     </Grid>
 </Page>

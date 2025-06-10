@@ -61,10 +61,5 @@ namespace XCVTransformer.AuxClasses
         public static readonly Boolean CodificatingToMode = true;
         public static readonly Boolean CodificatingFromMode = false;
 
-
-        //Para modo de transformación, automático o con atajo especial
-        public static readonly Boolean AutomaticTransform = true;
-        public static readonly Boolean SpecialShortCutTransform = false;
-
     }
 }

@@ -38,7 +38,6 @@ namespace XCVTransformer.ViewModels
         ///OTROS PAGE
         private bool isDetectorOn = false;
         private string detectedLanguageText = "";
-        private bool transformingMode = AppConstants.AutomaticTransform;
 
 
         //-------------------------CLASE Y METODOS-------------------------
@@ -330,21 +329,6 @@ namespace XCVTransformer.ViewModels
                 }
             }
         }
-
-        public bool TransformingMode
-        {
-            get => transformingMode;
-            set
-            {
-                if (transformingMode != value)
-                {
-                    transformingMode = value;
-                    clipboardTaker.ChangeTransformingMode(transformingMode);
-                    OnPropertyChanged(nameof(TransformingMode));
-                }
-            }
-        }
-
         //-------------------------CAMBIAR VISUALES-------------------------
         private void desactivarTraductorVisuals()
         {
