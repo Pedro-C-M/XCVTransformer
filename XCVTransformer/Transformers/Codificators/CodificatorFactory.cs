@@ -1,4 +1,5 @@
 ﻿using System;
+using XCVTransformer.Transformers.Codificators.Implementations;
 
 namespace XCVTransformer.Transformers.Codificators
 {
@@ -13,6 +14,7 @@ namespace XCVTransformer.Transformers.Codificators
             return codificationName switch
             {
                 "Base64" => new Base64Codificator(),
+                "Encriptación AES" => new AESCodificator(),
                 _ => throw new ArgumentException($"Codificación desconocida: {codificationName}")
             };
         }

@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XCVTransformer.AuxClasses;
+using System.Threading.Tasks;
+using Windows.Security.Credentials;
 
-namespace XCVTransformer.Transformers.Codificators
+
+namespace XCVTransformer.Transformers.Codificators.Implementations
 {
-    class Base64Codificator : ITransformer, ICodificator
+    class AESCodificator : ITransformer, ICodificator
     {
         //Variable que indica si estamos en modo codificar To (True) o From (False) 
         private bool codificatorMode = true;
         public void ChangeCodificatorMode(bool newMode)
         {
-            this.codificatorMode = newMode;
+            codificatorMode = newMode;
         }
 
         /**
@@ -23,23 +22,22 @@ namespace XCVTransformer.Transformers.Codificators
          */
         public Task<string> Transform(string toTransform)
         {
-            try { 
-             if (codificatorMode)
+            try
+            {
+                if (codificatorMode)
                 {//Modo To
-                    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(toTransform);
-                    return Task.FromResult(Convert.ToBase64String(bytes));
+                    
                 }
-            else
+                else
                 {//Modo From
-                    byte[] bytes = Convert.FromBase64String(toTransform);
-                    return Task.FromResult(System.Text.Encoding.UTF8.GetString(bytes));
+                    
                 }
             }
-            catch(FormatException ex)
+            catch (FormatException ex)
             {
                 NotificationLauncher.NotifyBadFormatForCodification("Base64");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new ArgumentException("Error en el codificador", e);
 
