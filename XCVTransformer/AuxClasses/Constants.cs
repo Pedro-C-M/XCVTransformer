@@ -15,7 +15,9 @@ namespace XCVTransformer.AuxClasses
         {
             "Base64",
             "Encriptación AES",
-            "Encriptación Blowfish"
+            "Encriptación DES",
+            "Encriptación Blowfish",
+            "Encriptación Enigma"
         };
 
         /**
