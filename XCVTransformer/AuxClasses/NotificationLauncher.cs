@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 
 namespace XCVTransformer.AuxClasses
 {
@@ -49,6 +50,13 @@ namespace XCVTransformer.AuxClasses
             new ToastContentBuilder()
                 .AddText("No tiene formato correcto para poder transformar "+ codName)
                 .Show();
+        }
+
+        internal static void NotifyCryptoError(string codName)
+        {
+            new ToastContentBuilder()
+                           .AddText("Error criptográfico para poder transformar " + codName)
+                           .Show();
         }
     }
 }

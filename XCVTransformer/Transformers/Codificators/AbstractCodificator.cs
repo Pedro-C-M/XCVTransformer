@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using XCVTransformer.AuxClasses;
 
@@ -35,6 +36,10 @@ namespace XCVTransformer.Transformers.Codificators
             catch (FormatException)
             {
                 NotificationLauncher.NotifyBadFormatForCodification(GetName());
+            }
+            catch (CryptographicException)
+            {
+                NotificationLauncher.NotifyCryptoError(GetName());
             }
             catch (Exception ex)
             {

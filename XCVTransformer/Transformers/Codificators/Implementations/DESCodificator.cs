@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -21,7 +22,6 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
         private async Task<(byte[] Key, byte[] IV)> GetOrCreateKeyAndIVAsync()
         {
             var vault = new PasswordVault();
-
             try
             {
                 var credential = vault.Retrieve(vaultResource, vaultKeyName);
@@ -38,8 +38,9 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             }
             catch
             {
-                byte[] key = RandomNumberGenerator.GetBytes(8);
-                byte[] iv = RandomNumberGenerator.GetBytes(8);
+                using var desTemp = DES.Create();
+                byte[] key = desTemp.Key;
+                byte[] iv = desTemp.IV;
 
                 byte[] combined = new byte[16];
                 Buffer.BlockCopy(key, 0, combined, 0, 8);
