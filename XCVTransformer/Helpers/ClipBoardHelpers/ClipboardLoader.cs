@@ -17,6 +17,9 @@ namespace XCVTransformer.Helpers
 
 
         private string lastTransformedText = "";
+        public bool IsInternalUpdate { get; private set; } = false;
+        private const int LockedTime = 200;
+
 
         /**
          * Este método se encarga de cargar una cadena al portapapeles
@@ -26,10 +29,12 @@ namespace XCVTransformer.Helpers
         public async Task LoadTextToClipboard(string text)
         {
             ///Para evitar bucles repitiendo lo mismo por problemas de asincronidad
+            /**
             if (_transformer is not LanguageDetector && text == lastTransformedText)
             {
                 return;
             }
+            */
             string transformedText = await TransformText(text);
             if (isDetectorOn)
             {
@@ -37,10 +42,15 @@ namespace XCVTransformer.Helpers
             }
             else {
                 DataPackage dataPackage = new DataPackage();
-                dataPackage.SetText(transformedText); 
+                dataPackage.SetText(transformedText);
+
+                IsInternalUpdate = true; //Lock de 200ms para evitar bucles infinitos
 
                 Clipboard.SetContent(dataPackage);
                 lastTransformedText = transformedText;
+
+                await Task.Delay(LockedTime); //Abre el lock
+                IsInternalUpdate = false;
             }
         }
 

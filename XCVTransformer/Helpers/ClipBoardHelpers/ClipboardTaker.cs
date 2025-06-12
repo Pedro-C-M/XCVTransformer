@@ -43,6 +43,9 @@ namespace XCVTransformer.Helpers
          */
         private async void OnClipboardContentChanged(object sender, object e)
         {
+            if (loader.IsInternalUpdate)
+                return; //Descartar cambios hechos por el bucle de asincronia del loader
+
             if (!this.transformerOn)//Si está apagado el trasnformador fuera, si es la primera vez que se intenta lanzar un aviso quizas.
             {
                 if (firstTryWhileOffFlag)

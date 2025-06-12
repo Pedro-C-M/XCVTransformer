@@ -15,7 +15,9 @@ namespace XCVTransformer.Transformers.Codificators
             {
                 "Base64" => new Base64Codificator(),
                 "Encriptación AES" => new AESCodificator(),
+                "Encriptación DES" => new AESCodificator(),
                 "Encriptación Blowfish" => new BlowfishCodificator(),
+                "Encriptación Enigma" => new EnigmaCodificator(),
                 _ => throw new ArgumentException($"Codificación desconocida: {codificationName}")
             };
         }
