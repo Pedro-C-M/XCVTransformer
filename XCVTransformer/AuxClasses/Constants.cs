@@ -9,6 +9,16 @@ namespace XCVTransformer.AuxClasses
     public static class AppConstants
     {
         /**
+         *Las formas de codificar disponibles en lista
+         */
+        public static readonly List<string> CodificationList = new List<string>
+        {
+            "Base64",
+            "Encriptación AES",
+            "Encriptación Blowfish"
+        };
+
+        /**
          *Para la lista de idiomas de traducir disponibles 
          *
          *Son los 12 Idiomas más hablados del mundo en orden incluyendo el italiano y excluyendo árabe que no encontré su código 
@@ -47,14 +57,6 @@ namespace XCVTransformer.AuxClasses
             { "Alemán", "de" },
             { "Japonés", "ja" },
             { "Italiano", "it" }
-        };
-        /**
-         *Las formas de codificar disponibles en lista
-         */
-        public static readonly List<string> CodificationList = new List<string>
-        {
-            "Base64",
-            "Encriptación AES"
         };
 
         //Para el tema de los codificadores y configurar si estan en modo to o from poder usar constantes en el método y quedar más claro

@@ -230,6 +230,14 @@ namespace XCVTransformer.ViewModels
                     {
                         this.clipboardTaker.loader._transformer = CodificatorFactory.Create(value);
                         this.clipboardTaker.loader.ReestartLastTransformedWord();
+                        //Cambiamos el modo del codificador al que tenemos en la UI
+                        if (this.clipboardTaker.loader._transformer is ICodificator codificator)
+                        {
+                            if (this.codificating)
+                                codificator.ChangeCodificatorMode(AppConstants.CodificatingToMode);
+                            else
+                                codificator.ChangeCodificatorMode(AppConstants.CodificatingFromMode);
+                        }
                         //Debug.WriteLine("Codificador creado para: " + value);
                     }
                     catch (Exception ex)
