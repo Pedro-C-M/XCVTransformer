@@ -6,6 +6,7 @@ using XCVTransformer.Transformers;
 using Microsoft.Toolkit.Uwp.Notifications; // Necesario
 using Windows.UI.Notifications;
 using Microsoft.Windows.AppLifecycle;
+using static System.Net.Mime.MediaTypeNames;
 
 
 
@@ -76,6 +77,15 @@ namespace XCVTransformer.Helpers
                 if (package.Contains(StandardDataFormats.Text))
                 {
                     string text = await package.GetTextAsync();
+
+                    //Comprobamos longitud del texto si pasa maximo 
+                    var result = this.loader._transformer.MaxCharactersAllowed(text.Length);
+                    if (result.overMax)
+                    {//Se pasa de limite y cortamos
+                        AuxClasses.NotificationLauncher.NotifyCharactersLimit(result.accion, result.limit);
+                        transformingFlag = false;
+                        return;
+                    }
                     await loader.LoadTextToClipboard(text);
                     //await ClipboardLoader.MockTransformTime(1000);
                     ClipboardTextChanged?.Invoke(this, text);

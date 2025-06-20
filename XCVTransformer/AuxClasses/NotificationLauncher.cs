@@ -48,6 +48,7 @@ namespace XCVTransformer.AuxClasses
         internal static void NotifyBadFormatForCodification(string codName)
         {
             new ToastContentBuilder()
+                .AddText("Texto entrante incorrecto")
                 .AddText("No tiene formato correcto para poder transformar "+ codName)
                 .Show();
         }
@@ -55,8 +56,22 @@ namespace XCVTransformer.AuxClasses
         internal static void NotifyCryptoError(string codName)
         {
             new ToastContentBuilder()
-                           .AddText("Error criptográfico para poder transformar " + codName)
-                           .Show();
+                .AddText("Error criptográfico")
+                .AddText("Error criptográfico para poder transformar " + codName)
+                .Show();
         }
+
+        /**
+         * Límite de caracteres por llamada
+         */
+        internal static void NotifyCharactersLimit(string accion, int nCharacteres)
+        {
+            new ToastContentBuilder()
+               .AddText("Límite de caracteres de transformación")
+               .AddText("No se puede " + accion + " con más de " + nCharacteres +" caracteres")
+               .Show();
+        }
+
+
     }
 }

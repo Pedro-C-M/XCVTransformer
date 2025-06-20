@@ -48,6 +48,16 @@ namespace XCVTransformer.Transformers.Codificators
             return "Error de codificación";
         }
 
+        public (bool, string, int) MaxCharactersAllowed(int charactersNum)
+        {
+            if (charactersNum < 500)
+            {
+                return (false, "Codificar", 500);
+            }
+            return (true, "Codificar", 500);
+        }
+
+
         //---------------Métodos abstractos que las subclases deben implementar------------------
         protected abstract Task<string> Encode(string input);
         protected abstract Task<string> Decode(string input);

@@ -121,5 +121,14 @@ namespace XCVTransformer.Transformers
             var reversed = LanguageCodes.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
             return reversed.TryGetValue(code, out string name) ? name : code;
         }
+
+        public (bool, string, int) MaxCharactersAllowed(int charactersNum)
+        {
+            if (charactersNum < 100)
+            {
+                return (false, "Detectar lenguaje", 100);
+            }
+            return (true, "Detectar lenguaje", 100);
+        }
     }
 }

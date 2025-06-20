@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using XCVTransformer.AuxClasses;
 
 
 namespace XCVTransformer.Transformers
@@ -81,6 +82,15 @@ namespace XCVTransformer.Transformers
         bool ITraductor.SameFromTo()
         {
             return (fromLanguage.Equals(toLanguage));
+        }
+
+        public (bool, string, int) MaxCharactersAllowed(int charactersNum)
+        {
+            if (charactersNum < 1000)
+            {
+                return (false, "Traducir", 1000);
+            }
+            return (true, "Traducir", 1000);
         }
     }
 }
