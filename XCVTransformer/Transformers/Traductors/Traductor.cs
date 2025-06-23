@@ -30,7 +30,6 @@ namespace XCVTransformer.Transformers
          */
         public async Task<string> Transform(string toTransform)
         {
-            Debug.WriteLine("uwww");
             var route = $"/translate?api-version={apiVersion}&from={fromLanguage}&to={toLanguage}";
 
             using (var client = new HttpClient())
@@ -50,7 +49,7 @@ namespace XCVTransformer.Transformers
 
                     var translatedText = JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
 
-                    Debug.WriteLine("Nueva traducción de " + toTransform);
+                    //Debug.WriteLine("Nueva traducción de " + toTransform);
 
                     return translatedText;
                 }

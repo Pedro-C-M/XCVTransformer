@@ -18,6 +18,7 @@ namespace XCVTransformer.Transformers.Codificators
                 "Encriptación DES" => new DESCodificator(),
                 "Encriptación Blowfish" => new BlowfishCodificator(),
                 "Encriptación Enigma" => new EnigmaCodificator(),
+                "Invertir orden" => new Inversor(),
                 _ => throw new ArgumentException($"Codificación desconocida: {codificationName}")
             };
         }

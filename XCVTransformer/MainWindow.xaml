@@ -74,7 +74,7 @@
                     </Grid.ColumnDefinitions>
 
                     <NavigationViewItem x:Name="TranslatorPage" Content="Traducir" Tag="TranslatorPage" Grid.Column="1" Tapped="NavItemTapped"/>
-                    <NavigationViewItem x:Name="CodificationPage" Content="Codificar" Tag="CodificationPage" Grid.Column="2" Tapped="NavItemTapped"/>
+                    <NavigationViewItem x:Name="CodificationPage" Content="Transformar" Tag="CodificationPage" Grid.Column="2" Tapped="NavItemTapped"/>
                     <NavigationViewItem x:Name="OtrosPage" Content="Otros" Tag="OtrosPage" Grid.Column="3" Tapped="NavItemTapped"/>
                 </Grid>
             </NavigationView.PaneCustomContent>

@@ -17,7 +17,10 @@ namespace XCVTransformer.AuxClasses
             "Encriptación AES",
             "Encriptación DES",
             "Encriptación Blowfish",
-            "Encriptación Enigma"
+            "Encriptación Enigma",
+            "Invertir orden",
+            "Contar caracteres",
+            "Camel-Case"
         };
 
         /**
