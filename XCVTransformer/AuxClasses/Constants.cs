@@ -11,12 +11,15 @@ namespace XCVTransformer.AuxClasses
         public static readonly List<string> CodificationList = new List<string>
         {
             "Codificación Base64",
+            "Codificación Hexadecimal",
+            "Codificación Morse",
+            "Codificacón ROT13",
             "Encriptación AES",
             "Encriptación DES",
             "Encriptación Blowfish",
             "Encriptación Enigma",
             "Invertir orden",
-            "Contar caracteres",
+            //"Contar caracteres",
             "Camel-Case"
         };
 

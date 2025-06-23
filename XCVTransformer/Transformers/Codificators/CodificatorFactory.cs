@@ -13,12 +13,16 @@ namespace XCVTransformer.Transformers.Codificators
         {
             return codificationName switch
             {
-                "Base64" => new Base64Codificator(),
+                "Codificación Base64" => new Base64Codificator(),
+                "Codificación Hexadecimal" => new HexCodificator(),
+                "Codificación Morse" => new MorseCodificator(),
+                "Codificacón ROT13" => new ROT13Codification(),
                 "Encriptación AES" => new AESCodificator(),
                 "Encriptación DES" => new DESCodificator(),
                 "Encriptación Blowfish" => new BlowfishCodificator(),
                 "Encriptación Enigma" => new EnigmaCodificator(),
                 "Invertir orden" => new Inversor(),
+                "Contar caracteres" => new CharCount(),
                 _ => throw new ArgumentException($"Codificación desconocida: {codificationName}")
             };
         }
