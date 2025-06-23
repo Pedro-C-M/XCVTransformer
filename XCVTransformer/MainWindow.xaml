@@ -81,12 +81,5 @@
 
             <Frame x:Name="contentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </NavigationView>
-
-        <!-- Parte de abajo con texto para probar
-        <Grid Height="100" Background="Gray" ColumnDefinitions="*, Auto, *" RowDefinitions="*, Auto, Auto, *" Grid.Row="3">
-            <TextBox AutomationProperties.Name="simple TextBox" Grid.Row="1" Grid.Column="1"/>
-            <TextBlock x:Name="ClipboardTextBlock" Text="{x:Bind ClipboardText, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Grid.Row="2" Grid.Column="1"/>
-        </Grid>
-        -->
-        </Grid>
+    </Grid>
 </Window>

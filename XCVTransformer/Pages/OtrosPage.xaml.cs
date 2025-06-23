@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace XCVTransformer.Pages
@@ -7,6 +8,11 @@ namespace XCVTransformer.Pages
         public OtrosPage()
         {
             this.InitializeComponent();
+        }
+
+        private void CerrarApp_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
         }
     }
 }

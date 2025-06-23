@@ -26,7 +26,9 @@
         </Grid>
         <Border Grid.Row="2" Height="1" Background="AntiqueWhite" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
         <Grid Grid.Row="3" RowDefinitions="Auto,Auto" Padding="20">
-            <TextBlock Grid.Row="0" Text="Otro grid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+            <Button Grid.Row="0" Content="Cerrar aplicación"
+                Click="CerrarApp_Click"
+                HorizontalAlignment="Center" Margin="10"/>
         </Grid>
     </Grid>
 </Page>
