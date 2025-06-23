@@ -26,7 +26,6 @@ namespace XCVTransformer.ViewModels
         private string lastSelectedNavItem;
 
         ///TRANSLATION PAGE
-        private string initText = "Hola";
         private string selectedOriginLanguage = "Español";
         private string selectedEndLanguage = "Inglés";
         ///CODIFICATIONS PAGE
@@ -105,10 +104,6 @@ namespace XCVTransformer.ViewModels
             }
         }
         ///-----------------------------------------------------TRANSLATOR PAGE 
-        public String InitText
-        {
-            get => initText;
-        }
 
         private List<string> words = AppConstants.LanguageList;
 
