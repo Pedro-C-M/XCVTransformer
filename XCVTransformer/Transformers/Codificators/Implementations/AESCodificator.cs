@@ -1,5 +1,4 @@
 ﻿using System;
-using XCVTransformer.AuxClasses;
 using System.Threading.Tasks;
 using Windows.Security.Credentials;
 

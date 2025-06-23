@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using WinRT.Interop;
 
 namespace XCVTransformer.Helpers

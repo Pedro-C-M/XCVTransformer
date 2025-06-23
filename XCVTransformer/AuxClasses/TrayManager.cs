@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.UI.Xaml;
-
 using XCVTransformer.Helpers;
 using XCVTransformer.WinSubclasses;
 

@@ -3,11 +3,6 @@ using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
 using XCVTransformer.Transformers;
 
-using Microsoft.Toolkit.Uwp.Notifications; // Necesario
-using Windows.UI.Notifications;
-using Microsoft.Windows.AppLifecycle;
-using static System.Net.Mime.MediaTypeNames;
-
 
 
 namespace XCVTransformer.Helpers
