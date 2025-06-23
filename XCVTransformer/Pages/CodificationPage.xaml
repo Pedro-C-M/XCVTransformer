@@ -12,44 +12,48 @@
           Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
           CornerRadius="{ThemeResource OverlayCornerRadius}">
 
-        <StackPanel>
-            <TextBlock Text="Transformadores" FontSize="20" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-            <Grid Padding="16" ColumnDefinitions="*,*">
-                <RadioButton Content="Transformar a"
-                     IsChecked="{Binding Codificating, Mode=TwoWay}"
-                     GroupName="CodificationGroup"
-                     HorizontalAlignment="Center"
-                     Grid.Column="0"
-                     Margin="10,0,10,0" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                <RadioButton Content="Transformar desde"
-                     IsChecked="{Binding Decodificating, Mode=TwoWay}"
-                     GroupName="CodificationGroup"
-                     HorizontalAlignment="Center"
-                     Grid.Column="1"
-                     Margin="10,0,10,0" />
-            </Grid>
+        <TextBlock Grid.Row="0" Text="Transformadores" FontSize="20" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+        <Grid Grid.Row="1" Padding="16" ColumnDefinitions="*,*">
+            <RadioButton Content="Transformar a"
+                    IsChecked="{Binding Codificating, Mode=TwoWay}"
+                    GroupName="CodificationGroup"
+                    HorizontalAlignment="Center"
+                    Grid.Column="0"
+                    Margin="10,0,10,0" />
 
-            <ListView x:Name="CodificationList" Grid.Row="1" 
+            <RadioButton Content="Transformar desde"
+                    IsChecked="{Binding Decodificating, Mode=TwoWay}"
+                    GroupName="CodificationGroup"
+                    HorizontalAlignment="Center"
+                    Grid.Column="1"
+                    Margin="10,0,10,0" />
+        </Grid>
+
+        <ListView x:Name="CodificationList" Grid.Row="2" 
                   CornerRadius="{StaticResource ControlCornerRadius}"
                   Background="{ThemeResource LayerOnAcrylicFillColorDefaultBrush}"
                   Margin="16 0 16 16"                       
                   ItemsSource="{Binding Codifications}"
                   SelectedItem="{Binding SelectedCodification, Mode=TwoWay}"
                   HorizontalAlignment="Stretch">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="x:String">
-                        <Grid Padding="12" Background="Transparent">
-                            <TextBlock Text="{Binding}"
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Grid Padding="12" Background="Transparent">
+                        <TextBlock Text="{Binding}"
                            FontSize="20" 
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
                            TextWrapping="Wrap"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
