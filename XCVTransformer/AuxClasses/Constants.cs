@@ -10,7 +10,7 @@ namespace XCVTransformer.AuxClasses
          */
         public static readonly List<string> CodificationList = new List<string>
         {
-            "Base64",
+            "Codificación Base64",
             "Encriptación AES",
             "Encriptación DES",
             "Encriptación Blowfish",
