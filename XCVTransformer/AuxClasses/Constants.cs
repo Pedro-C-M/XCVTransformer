@@ -19,7 +19,7 @@ namespace XCVTransformer.AuxClasses
             "Encriptación Blowfish",
             "Encriptación Enigma",
             "Invertir orden",
-            //"Contar caracteres",
+            "Contar caracteres",
             "Camel-Case"
         };
 

@@ -40,7 +40,13 @@
 	  <Generator>MSBuild:Compile</Generator>
 	</Page>
   </ItemGroup>
-  <!--
+
+	<!-- Para el unit testing -->
+  <ItemGroup>
+	  <InternalsVisibleTo Include="XCVTransformer.Tests" />
+  </ItemGroup>
+
+	<!--
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
     Tools extension to be activated for this project even if the Windows App SDK Nuget
     package has not yet been restored.

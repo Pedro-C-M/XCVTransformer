@@ -6,12 +6,12 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
 {
     class ROT13Codification : AbstractCodificator
     {
-        protected override Task<string> Encode(string input)
+        internal override Task<string> Encode(string input)
         {
             return Task.FromResult(Rot13Transform(input));
         }
         // ROT13 es simétrico: encode y decode son iguales
-        protected override Task<string> Decode(string input)
+        internal override Task<string> Decode(string input)
         {
             return Task.FromResult(Rot13Transform(input));
         }
@@ -42,7 +42,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return result.ToString();
         }
 
-        protected override string GetName()
+        internal override string GetName()
         {
             return "ROT13";
         }

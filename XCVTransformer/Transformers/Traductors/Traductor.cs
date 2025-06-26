@@ -7,14 +7,32 @@ using Newtonsoft.Json;
 
 namespace XCVTransformer.Transformers
 {
-    class Traductor : ITransformer, ITraductor
+    public class Traductor : ITransformer, ITraductor
     {
         private string fromLanguage = "es";
         private string toLanguage = "en";
 
-        private string apiKey = Environment.GetEnvironmentVariable("MY_TRANSLATOR_API_KEY");
+        private string apiKey;
+        private readonly HttpClient httpClient;
+
         private static readonly string endpoint = "https://api.cognitive.microsofttranslator.com/";
         private static readonly string apiVersion = "3.0";
+
+        public Traductor()
+        {
+            this.apiKey = Environment.GetEnvironmentVariable("MY_TRANSLATOR_API_KEY");
+            this.httpClient = new HttpClient();
+        }
+
+        /**
+         * Este constructor desacopla y facilitará los test unitarios y los mock
+         * permite meter un httpClient falso que haga de mock
+         */
+        public Traductor(string apiKey, HttpClient? httpClient = null)
+        {
+            this.apiKey = apiKey;
+            this.httpClient = httpClient ?? new HttpClient();
+        }
 
         /**
          * Método que llama a la API de mi recurso traductor de Azure, depende de los atributos to y from los idiomas a destino y origen.
@@ -30,37 +48,33 @@ namespace XCVTransformer.Transformers
         {
             var route = $"/translate?api-version={apiVersion}&from={fromLanguage}&to={toLanguage}";
 
-            using (var client = new HttpClient())
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
+            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", "westeurope");
+
+            var requestBody = new[] { new { Text = toTransform } };
+            var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+
+            try
             {
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", "westeurope");
+                var response = await httpClient.PostAsync(endpoint + route, content);
+                response.EnsureSuccessStatusCode();
 
-                var requestBody = new[] { new { Text = toTransform } };
-                var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                var result = await response.Content.ReadAsStringAsync();
+                var translatedText = JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
 
-                try
-                {
-                    var response = await client.PostAsync(endpoint + route, content);
-                    response.EnsureSuccessStatusCode();
-
-                    var result = await response.Content.ReadAsStringAsync();
-
-                    var translatedText = JsonConvert.DeserializeObject<dynamic>(result)[0].translations[0].text;
-
-                    //Debug.WriteLine("Nueva traducción de " + toTransform);
-
-                    return translatedText;
-                }
-                catch(HttpRequestException)
-                {
-                    AuxClasses.NotificationLauncher.NotifyNoInternetError();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Error desconocido en la traducción: " + ex.Message);
-                }
-                return "";
+                return translatedText;
             }
+            catch (HttpRequestException)
+            {
+                AuxClasses.NotificationLauncher.NotifyNoInternetError();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error desconocido en la traducción: " + ex.Message);
+            }
+
+            return "";
         }
 
         void ITraductor.ChangeOriginCode(string newCode)

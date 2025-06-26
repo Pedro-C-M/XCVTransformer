@@ -9,17 +9,17 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
         /**
          * En el caso de revertir el orden es lo mismo codificar que decodificar
          */
-        protected override Task<string> Decode(string input)
+        internal override Task<string> Decode(string input)
         {
             return Task.FromResult(new string(input.Reverse().ToArray()));
         }
 
-        protected override Task<string> Encode(string input)
+        internal override Task<string> Encode(string input)
         {
             return Task.FromResult(new string(input.Reverse().ToArray()));
         }
 
-        protected override string GetName()
+        internal override string GetName()
         {
             return "Invertir orden";
         }

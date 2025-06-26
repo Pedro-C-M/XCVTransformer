@@ -31,19 +31,19 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return alphabet[mappedIndex];
         }
 
-        protected override Task<string> Encode(string input)
+        internal override Task<string> Encode(string input)
         {
             var encoded = new string(input.Select(EncodeChar).ToArray());
             return Task.FromResult(encoded);
         }
 
-        protected override Task<string> Decode(string input)
+        internal override Task<string> Decode(string input)
         {
             var decoded = new string(input.Select(DecodeChar).ToArray());
             return Task.FromResult(decoded);
         }
 
-        protected override string GetName() => "Encriptación Enigma";
+        internal override string GetName() => "Encriptación Enigma";
 
 
     }

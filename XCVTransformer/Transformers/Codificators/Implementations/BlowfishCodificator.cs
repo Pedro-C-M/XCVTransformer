@@ -15,46 +15,16 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
      */
     class BlowfishCodificator : AbstractCodificator
     {
-        private const string vaultResource = "XCVTransformer";
-        private const string vaultKeyName = "BlowfishKey";
+        private readonly IKeyStorage keyStorage;
 
-        private async Task<(byte[] Key, byte[] IV)> GetOrCreateKeyAndIVAsync()
+        public BlowfishCodificator(IKeyStorage keyStorage)
         {
-            var vault = new PasswordVault();
-
-            try
-            {
-                var credential = vault.Retrieve(vaultResource, vaultKeyName);
-                credential.RetrievePassword();
-                byte[] combined = Convert.FromBase64String(credential.Password);
-
-                byte[] key = new byte[16];
-                byte[] iv = new byte[8];
-
-                Buffer.BlockCopy(combined, 0, key, 0, 16);
-                Buffer.BlockCopy(combined, 16, iv, 0, 8);
-
-                return (key, iv);
-            }
-            catch
-            {
-                byte[] key = System.Security.Cryptography.RandomNumberGenerator.GetBytes(16);
-                byte[] iv = System.Security.Cryptography.RandomNumberGenerator.GetBytes(8);
-
-                byte[] combined = new byte[24];
-                Buffer.BlockCopy(key, 0, combined, 0, 16);
-                Buffer.BlockCopy(iv, 0, combined, 16, 8);
-
-                string encoded = Convert.ToBase64String(combined);
-                vault.Add(new PasswordCredential(vaultResource, vaultKeyName, encoded));
-
-                return (key, iv);
-            }
+            this.keyStorage = keyStorage;
         }
 
-        protected override async Task<string> Encode(string input)
+        internal override async Task<string> Encode(string input)
         {
-            var (key, iv) = await GetOrCreateKeyAndIVAsync();
+            var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 
             BufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new BlowfishEngine()));
             cipher.Init(true, new ParametersWithIV(new KeyParameter(key), iv));
@@ -71,9 +41,9 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return Convert.ToBase64String(final);
         }
 
-        protected override async Task<string> Decode(string input)
+        internal override async Task<string> Decode(string input)
         {
-            var (key, iv) = await GetOrCreateKeyAndIVAsync();
+            var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 
             BufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new BlowfishEngine()));
             cipher.Init(false, new ParametersWithIV(new KeyParameter(key), iv));
@@ -90,7 +60,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return System.Text.Encoding.UTF8.GetString(final);
         }
 
-        protected override string GetName()
+        internal override string GetName()
         {
             return "Encriptación Blowfish";
         }

@@ -9,7 +9,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
      */
     class HexCodificator : AbstractCodificator
     {
-        protected override Task<string> Encode(string input)
+        internal override Task<string> Encode(string input)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(input);
             StringBuilder hex = new StringBuilder(bytes.Length * 3);
@@ -23,7 +23,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return Task.FromResult(hex.ToString());
         }
 
-        protected override Task<string> Decode(string input)
+        internal override Task<string> Decode(string input)
         {
             string[] hexValues = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -36,7 +36,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return Task.FromResult(Encoding.UTF8.GetString(bytes));
         }
 
-        protected override string GetName()
+        internal override string GetName()
         {
             return "Hexadecimal";
         }

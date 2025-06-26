@@ -9,8 +9,9 @@ using System.Net.Http;
 
 namespace XCVTransformer.Transformers
 {
-    class LanguageDetector : ITransformer
+   public class LanguageDetector : ITransformer
     {
+        private readonly HttpClient httpClient;
 
         private string apiKey = Environment.GetEnvironmentVariable("MY_TRANSLATOR_API_KEY");
         private static readonly string endpoint = "https://api.cognitive.microsofttranslator.com/";
@@ -65,6 +66,16 @@ namespace XCVTransformer.Transformers
             { "Yidis", "yi" }
         };
 
+        public LanguageDetector()
+        {
+            this.httpClient = new HttpClient();
+        }
+
+        public LanguageDetector(HttpClient? httpClient = null)
+        {
+            this.httpClient = httpClient;
+        }
+
         /**
         * Método que llama a la API de mi recurso traductor de Azure para detectar el idioma del texto
         * 
@@ -78,39 +89,38 @@ namespace XCVTransformer.Transformers
         public async Task<string> Transform(string toDetect)
         {
             var route = $"/detect?api-version={apiVersion}";
-            using (var client = new HttpClient())
+         
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
+            httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", "westeurope");
+
+            var requestBody = new[] { new { Text = toDetect } };
+            var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+
+            try
             {
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", "westeurope");
+                var response = await httpClient.PostAsync(endpoint + route, content);
+                response.EnsureSuccessStatusCode();
 
-                var requestBody = new[] { new { Text = toDetect } };
-                var content = new StringContent(JsonConvert.SerializeObject(requestBody), Encoding.UTF8, "application/json");
+                var result = await response.Content.ReadAsStringAsync();
 
-                try
-                {
-                    var response = await client.PostAsync(endpoint + route, content);
-                    response.EnsureSuccessStatusCode();
+                var detectedLanguage = JsonConvert.DeserializeObject<dynamic>(result)[0].language;
+                string detectedLanguageName = GetLanguageNameFromCode((string)detectedLanguage);
 
-                    var result = await response.Content.ReadAsStringAsync();
+                //Debug.WriteLine($"Idioma detectado para \"{toDetect}\" -> {detectedLanguageName}");
 
-                    var detectedLanguage = JsonConvert.DeserializeObject<dynamic>(result)[0].language;
-                    string detectedLanguageName = GetLanguageNameFromCode((string)detectedLanguage);
-
-                    //Debug.WriteLine($"Idioma detectado para \"{toDetect}\" -> {detectedLanguageName}");
-
-                    return detectedLanguageName;
-                }
-                catch (HttpRequestException)
-                {
-                    AuxClasses.NotificationLauncher.NotifyNoInternetError();
-                }
-                catch (Exception ex)
-                {
-                    AuxClasses.NotificationLauncher.NotifyDetectorError("Contactar para informar el error");
-                    Debug.WriteLine("Error desconocido en la traducción: " + ex.Message);
-                }
-                return "";
+                return detectedLanguageName;
             }
+            catch (HttpRequestException)
+            {
+                AuxClasses.NotificationLauncher.NotifyNoInternetError();
+            }
+            catch (Exception ex)
+            {
+                AuxClasses.NotificationLauncher.NotifyDetectorError("Contactar para informar el error");
+                Debug.WriteLine("Error desconocido en la traducción: " + ex.Message);
+            }
+            return "";
         }
         private string GetLanguageNameFromCode(string code)
         {

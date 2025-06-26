@@ -59,9 +59,9 @@ namespace XCVTransformer.Transformers.Codificators
 
 
         //---------------Métodos abstractos que las subclases deben implementar------------------
-        protected abstract Task<string> Encode(string input);
-        protected abstract Task<string> Decode(string input);
-        protected abstract string GetName();
+        internal abstract Task<string> Encode(string input);
+        internal abstract Task<string> Decode(string input);
+        internal abstract string GetName();
     }
 
 }

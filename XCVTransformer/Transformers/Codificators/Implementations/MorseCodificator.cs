@@ -32,7 +32,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             }
         }
 
-        protected override Task<string> Encode(string input)
+        internal override Task<string> Encode(string input)
         {
             input = input.ToUpperInvariant();
             StringBuilder sb = new StringBuilder();
@@ -56,7 +56,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return Task.FromResult(sb.ToString().Trim());
         }
 
-        protected override Task<string> Decode(string input)
+        internal override Task<string> Decode(string input)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -84,7 +84,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return Task.FromResult(sb.ToString());
         }
 
-        protected override string GetName()
+        internal override string GetName()
         {
             return "Morse";
         }

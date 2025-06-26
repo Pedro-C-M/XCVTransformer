@@ -7,63 +7,16 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
 {
     class AESCodificator : AbstractCodificator
     {
-        /**
-         * ESTO UTILIZA VA A USAR PASSWORD VAULT DE WINDOWS
-         * 
-         * Una clase proporcionada por Windows por defecto en sus paquetes que funciona
-         * como un almacen seguro. Puede guardar cifrado y protegido por el OS cadenas de un usuario de la máquina.
-         * 
-         */
-        private const string vaultResource = "XCVTransformer";
-        private const string vaultKeyName = "AESKey";
+        private readonly IKeyStorage keyStorage;
 
-        /**
-         * Obtiene del vault tanto la private key como el IV, estos se guardan combinados por lo que
-         * en su uso hay que separarlos con sus tamaños de 32 y 16 bytes. La primera vez que el usuario
-         * acceda, se generará aleatoria esta cadena, el resto de las veces esta cadena se sacará del 
-         * ordenador.
-         * 
-         * 
-         */
-        private async Task<(byte[] Key, byte[] IV)> GetOrCreateKeyAndIVAsync()
+        public AESCodificator(IKeyStorage keyStorage)
         {
-            var vault = new PasswordVault();
-
-            try
-            {
-                var credential = vault.Retrieve(vaultResource, vaultKeyName);
-                credential.RetrievePassword();
-                byte[] combined = Convert.FromBase64String(credential.Password);
-
-                byte[] key = new byte[32]; // AES-256 que son 32 bytes
-                byte[] iv = new byte[16];  // AES block size que es 16 bytes 
-
-                
-                Buffer.BlockCopy(combined, 0, key, 0, 32);
-                Buffer.BlockCopy(combined, 32, iv, 0, 16);
-
-                return (key, iv);
-            }
-            catch
-            {
-                byte[] key = System.Security.Cryptography.RandomNumberGenerator.GetBytes(32);
-                byte[] iv = System.Security.Cryptography.RandomNumberGenerator.GetBytes(16);
-
-                byte[] combined = new byte[48];
-                Buffer.BlockCopy(key, 0, combined, 0, 32);
-                Buffer.BlockCopy(iv, 0, combined, 32, 16);
-
-                string encoded = Convert.ToBase64String(combined);
-                vault.Add(new PasswordCredential(vaultResource, vaultKeyName, encoded));
-
-                return (key, iv);
-            }
+            this.keyStorage = keyStorage;
         }
-
-        protected override async Task<string> Decode(string input)
+        internal override async Task<string> Decode(string input)
         {
             byte[] cipherText = Convert.FromBase64String(input);
-            var (key, iv) = await GetOrCreateKeyAndIVAsync();
+            var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 
             using var aes = System.Security.Cryptography.Aes.Create();
             aes.Key = key;
@@ -77,9 +30,9 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return sr.ReadToEnd();
         }
 
-        protected override async Task<string> Encode(string input)
+        internal override async Task<string> Encode(string input)
         {
-            var (key, iv) = await GetOrCreateKeyAndIVAsync();
+            var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 
             using var aes = System.Security.Cryptography.Aes.Create();
             aes.Key = key;
@@ -98,7 +51,7 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
             return Convert.ToBase64String(encrypted); 
         }
 
-        protected override string GetName()
+        internal override string GetName()
         {
             return "Encriptación AES";
         }
