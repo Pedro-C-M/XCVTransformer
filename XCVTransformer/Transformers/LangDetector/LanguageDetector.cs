@@ -115,7 +115,7 @@ namespace XCVTransformer.Transformers
         private string GetLanguageNameFromCode(string code)
         {
             var reversed = LanguageCodes.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
-            return reversed.TryGetValue(code, out string name) ? name : code;
+            return reversed.TryGetValue(code, out string name) ? name : "Desconocido"; //Si no está en el diccionario muestro desconocido
         }
 
         public (bool, string, int) MaxCharactersAllowed(int charactersNum)
