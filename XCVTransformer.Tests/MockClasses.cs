@@ -1,4 +1,6 @@
-﻿namespace XCVTransformer.Tests
+﻿using XCVTransformer.Transformers.Codificators;
+
+namespace XCVTransformer.Tests
 {
 
     /**
@@ -29,5 +31,20 @@
     {
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             => throw new HttpRequestException("Simulated network error");
+    }
+
+    public class MockKeyStorage : IKeyStorage
+    {
+        private readonly Func<Task<(byte[] Key, byte[] IV)>> _behavior;
+
+        public MockKeyStorage(Func<Task<(byte[] Key, byte[] IV)>> behavior)
+        {
+            _behavior = behavior;
+        }
+
+        public Task<(byte[] Key, byte[] IV)> GetOrCreateKeyAndIVAsync()
+        {
+            return _behavior();
+        }
     }
 }

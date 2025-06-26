@@ -21,6 +21,9 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
 
         internal override async Task<string> Encode(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return "";
+
             var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 
             using var des = DES.Create();
@@ -42,6 +45,9 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
 
         internal override async Task<string> Decode(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return "";
+
             byte[] cipherText = Convert.FromBase64String(input);
             var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 

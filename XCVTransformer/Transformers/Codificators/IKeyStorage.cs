@@ -2,8 +2,8 @@
 
 namespace XCVTransformer.Transformers.Codificators
 {
-    interface IKeyStorage
+    public interface IKeyStorage
     {
-        Task<(byte[] Key, byte[] IV)> GetOrCreateKeyAndIVAsync();
+        public Task<(byte[] Key, byte[] IV)> GetOrCreateKeyAndIVAsync();
     }
 }

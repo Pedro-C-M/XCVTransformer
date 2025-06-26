@@ -24,6 +24,9 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
 
         internal override async Task<string> Encode(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return "";
+
             var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 
             BufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new BlowfishEngine()));
@@ -43,6 +46,9 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
 
         internal override async Task<string> Decode(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return "";
+
             var (key, iv) = await keyStorage.GetOrCreateKeyAndIVAsync();
 
             BufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(new BlowfishEngine()));
