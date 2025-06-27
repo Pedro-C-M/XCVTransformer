@@ -33,12 +33,18 @@ namespace XCVTransformer.Transformers.Codificators.Implementations
 
         internal override Task<string> Encode(string input)
         {
+            if (string.IsNullOrEmpty(input))
+                return Task.FromResult("");
+
             var encoded = new string(input.Select(EncodeChar).ToArray());
             return Task.FromResult(encoded);
         }
 
         internal override Task<string> Decode(string input)
         {
+            if (string.IsNullOrEmpty(input))
+                return Task.FromResult("");
+
             var decoded = new string(input.Select(DecodeChar).ToArray());
             return Task.FromResult(decoded);
         }
