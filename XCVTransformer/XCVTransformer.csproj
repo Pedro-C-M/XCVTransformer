@@ -27,9 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	<None Update="Assets/AppLogo/Developing-logo.ico">
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	</None>
 	<Page Update="Pages\OtrosPage.xaml">
 	  <Generator>MSBuild:Compile</Generator>
 	</Page>
@@ -81,6 +78,16 @@
     <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
-    <ApplicationIcon>Assets\AppLogo\Developing-logo.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\AppLogo\App-logo.ico</ApplicationIcon>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>A628DF19FF5AE9AD78DCB9BBE06F16CD8FAA8405</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Never</AppxBundle>
+    <AppInstallerUri>C:\XCVInstaller\</AppInstallerUri>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 </Project>

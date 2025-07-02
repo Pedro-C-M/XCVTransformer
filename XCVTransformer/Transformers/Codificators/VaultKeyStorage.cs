@@ -15,9 +15,15 @@ namespace XCVTransformer.Transformers.Codificators
          */
         private const string vaultResource = "XCVTransformer";
         private String vaultKeyName;
-        public VaultKeyStorage(String vaultKeyName)
+        // Tamaños configurables
+        private readonly int keySize;
+        private readonly int ivSize;
+
+        public VaultKeyStorage(string vaultKeyName, int keySize, int ivSize)
         {
             this.vaultKeyName = vaultKeyName;
+            this.keySize = keySize;
+            this.ivSize = ivSize;
         }
 
         /**
@@ -37,22 +43,22 @@ namespace XCVTransformer.Transformers.Codificators
                 credential.RetrievePassword();
                 byte[] combined = Convert.FromBase64String(credential.Password);
 
-                byte[] key = new byte[32]; // AES-256 size
-                byte[] iv = new byte[16];  // AES block size
+                byte[] key = new byte[keySize];
+                byte[] iv = new byte[ivSize];
 
-                Buffer.BlockCopy(combined, 0, key, 0, 32);
-                Buffer.BlockCopy(combined, 32, iv, 0, 16);
+                Buffer.BlockCopy(combined, 0, key, 0, keySize);
+                Buffer.BlockCopy(combined, keySize, iv, 0, ivSize);
 
                 return Task.FromResult((key, iv));
             }
             catch
             {
-                byte[] key = System.Security.Cryptography.RandomNumberGenerator.GetBytes(32);
-                byte[] iv = System.Security.Cryptography.RandomNumberGenerator.GetBytes(16);
+                byte[] key = System.Security.Cryptography.RandomNumberGenerator.GetBytes(keySize);
+                byte[] iv = System.Security.Cryptography.RandomNumberGenerator.GetBytes(ivSize);
 
-                byte[] combined = new byte[48];
-                Buffer.BlockCopy(key, 0, combined, 0, 32);
-                Buffer.BlockCopy(iv, 0, combined, 32, 16);
+                byte[] combined = new byte[keySize + ivSize];
+                Buffer.BlockCopy(key, 0, combined, 0, keySize);
+                Buffer.BlockCopy(iv, 0, combined, keySize, ivSize);
 
                 string encoded = Convert.ToBase64String(combined);
                 vault.Add(new PasswordCredential(vaultResource, vaultKeyName, encoded));

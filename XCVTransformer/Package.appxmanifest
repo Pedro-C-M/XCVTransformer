@@ -10,7 +10,7 @@
   <Identity
     Name="22c58f5e-ae18-4d50-a7fa-86f7b18a299b"
     Publisher="CN=Pedro"
-    Version="1.0.0.0" />
+    Version="1.0.10.0" />
 
   <mp:PhoneIdentity PhoneProductId="22c58f5e-ae18-4d50-a7fa-86f7b18a299b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -41,6 +41,7 @@
         Square44x44Logo="Assets\RecursosVisuales\Developing-logo.png">
         <uap:DefaultTile Wide310x150Logo="Assets\RecursosVisuales\Wide310x150Logo.png"  Square71x71Logo="Assets\RecursosVisuales\SmallTile.png" Square310x310Logo="Assets\RecursosVisuales\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\RecursosVisuales\SplashScreen.png" />
+        <uap:LockScreen BadgeLogo="Assets\RecursosVisuales\BadgeLogo.png" Notification="badge"/>
       </uap:VisualElements>
     </Application>
   </Applications>

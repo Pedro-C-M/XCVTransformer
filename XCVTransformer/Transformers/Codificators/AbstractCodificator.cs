@@ -50,7 +50,7 @@ namespace XCVTransformer.Transformers.Codificators
 
         public (bool, string, int) MaxCharactersAllowed(int charactersNum)
         {
-            if (charactersNum < 500)
+            if (charactersNum <= 500)
             {
                 return (false, "Codificar", 500);
             }

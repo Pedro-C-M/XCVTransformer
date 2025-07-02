@@ -130,7 +130,7 @@ namespace XCVTransformer.Transformers
 
         public (bool, string, int) MaxCharactersAllowed(int charactersNum)
         {
-            if (charactersNum < 100)
+            if (charactersNum <= 100)
             {
                 return (false, "Detectar lenguaje", 100);
             }

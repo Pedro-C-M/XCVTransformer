@@ -73,17 +73,27 @@ namespace XCVTransformer.Helpers
                 {
                     string text = await package.GetTextAsync();
 
+                    //Trim quita saltos de linea y caracteres de este tipo al inicio o fin del contenido, esto evita problema de transformar
+                    //\n\r por ejemplo al copiar vacios y causa q codificaciones muestren algo de vacio
+                    string trimmedText = text.Trim();
+
+                    // Si tras trim el texto está vacío, no procesamos
+                    if (string.IsNullOrEmpty(trimmedText))
+                    {
+                        transformingFlag = false;
+                        return;
+                    }
                     //Comprobamos longitud del texto si pasa maximo 
-                    var result = this.loader._transformer.MaxCharactersAllowed(text.Length);
+                    var result = this.loader._transformer.MaxCharactersAllowed(trimmedText.Length);
                     if (result.overMax)
                     {//Se pasa de limite y cortamos
                         AuxClasses.NotificationLauncher.NotifyCharactersLimit(result.accion, result.limit);
                         transformingFlag = false;
                         return;
                     }
-                    await loader.LoadTextToClipboard(text);
+                    await loader.LoadTextToClipboard(trimmedText);
                     //await ClipboardLoader.MockTransformTime(1000);
-                    ClipboardTextChanged?.Invoke(this, text);
+                    ClipboardTextChanged?.Invoke(this, trimmedText);
                 }
             }
             catch (Exception ex)

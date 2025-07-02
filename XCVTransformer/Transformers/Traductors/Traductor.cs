@@ -97,7 +97,7 @@ namespace XCVTransformer.Transformers
 
         public (bool, string, int) MaxCharactersAllowed(int charactersNum)
         {
-            if (charactersNum < 2000)
+            if (charactersNum <= 2000)
             {
                 return (false, "Traducir", 2000);
             }
