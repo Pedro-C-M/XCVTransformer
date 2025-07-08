@@ -302,7 +302,7 @@ namespace XCVTransformer.ViewModels
                 {
                     isDetectorOn = value;
                     OnPropertyChanged(nameof(isDetectorOn));
-                    this.clipboardTaker.loader.ChangeToDetectorMode(isDetectorOn);
+                    this.clipboardTaker.loader.ChangeToDetectorMode(isDetectorOn, true);
                     if (value)
                     {               
                         this.desactivarTraductorVisuals();
@@ -346,7 +346,7 @@ namespace XCVTransformer.ViewModels
         {
             if (this.isDetectorOn){
                 this.isDetectorOn = false;
-                this.clipboardTaker.loader.ChangeToDetectorMode(false);
+                this.clipboardTaker.loader.ChangeToDetectorMode(false, false);
                 this.detectedLanguageText = "";
             }
         }

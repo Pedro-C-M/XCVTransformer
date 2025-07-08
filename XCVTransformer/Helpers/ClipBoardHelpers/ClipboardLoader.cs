@@ -59,7 +59,7 @@ namespace XCVTransformer.Helpers
             lastTransformedText = "";
         }
 
-        public void ChangeToDetectorMode(bool detectorMode)
+        public void ChangeToDetectorMode(bool detectorMode, bool isChangeBromSwitch)
         {
             this.isDetectorOn = detectorMode;
             if (detectorMode)
@@ -69,7 +69,10 @@ namespace XCVTransformer.Helpers
             }
             else
             {
-                this._transformer = lastTransformer;//Renovamos el transformer que había
+                if (isChangeBromSwitch)
+                {
+                    this._transformer = lastTransformer;//Renovamos el transformer que había
+                }
             }
         }
 
