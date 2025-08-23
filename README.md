@@ -33,3 +33,5 @@ Este proyecto forma parte de un Trabajo Fin de Grado (TFG) en Ingeniería Inform
 
 ## Licencia
 Este proyecto se entrega con fines académicos. Para uso o distribución externa, por favor contactar con el autor Pedro Castro Montes.
+
+Temporalmente no traduce hasta que actualice las API key de traducción o vuelva a activar el servicio
