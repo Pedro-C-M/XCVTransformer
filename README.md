@@ -25,6 +25,19 @@ Este proyecto forma parte de un Trabajo Fin de Grado (TFG) en Ingeniería Inform
 - **Tests:** MSTest
 - **Otras tecnologías:** Windows App SDK, BouncyCastle (para cifrados), APIs de traducción
 
+## Capturas de la aplicación
+
+Captura de traducciones
+<p align="center">
+  <img src="XCVTransformer/Assets/CapturaTraduccion.png" alt="Captura de traducciones"/>
+</p>
+
+Captura de transformaciones
+<p align="center">
+  <img src="XCVTransformer/Assets/CapturaTransform.png" alt="Captura de transformaciones"/>
+</p>
+   
+
 ## Requisitos
 
 - Windows 10/11 con soporte para aplicaciones WinUI 3
